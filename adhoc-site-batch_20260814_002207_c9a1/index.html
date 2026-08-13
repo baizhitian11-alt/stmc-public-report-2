@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1200,initial-scale=1">
+<title>单点批次 · 19 条</title>
+<style>
+  :root{--bg:#0a0d14;--panel:#101622;--panel2:#0d1320;--line:#1f2937;
+        --text:#e6edf3;--muted:#94a3b8;--primary:#fbbf24;--success:#86efac;--info:#9dbcff}
+  html[data-theme="light"]{--bg:#f7f3ea;--panel:#fffdf8;--panel2:#f1eadf;--line:#d9d0c2;
+        --text:#292822;--muted:#716c62;--primary:#9a5f44;--success:#66734d;--info:#66734d}
+  html[data-theme="light"] .header{background:linear-gradient(180deg,#fffdf8,#f4eee4)}
+  html[data-theme="light"] .full-card{background:linear-gradient(135deg,#f2e5d9,#fffdf8);border-color:#c9a58f}
+  html[data-theme="light"] .full-card h2,html[data-theme="light"] .cat-card h3{color:var(--text)}
+  html[data-theme="light"] .cat-card .cm-grid{background:var(--panel2)}
+  html[data-theme="light"] .cat-card{box-shadow:0 8px 24px rgba(84,70,56,.06)}
+  html[data-theme="light"] .tool-btn.light{background:#9a5f44;color:#fff;box-shadow:none}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+       font:14px/1.6 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
+  a{color:inherit;text-decoration:none}
+  .header{padding:32px 40px 24px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+          background:linear-gradient(180deg,#0d1320,#0a0d14);border-bottom:1px solid var(--line)}
+  .header h1{margin:0;font-size:26px;font-weight:700}
+  .header .badge{background:rgba(251,191,36,.14);color:var(--primary);padding:5px 12px;
+                 border-radius:16px;font-size:12px;border:1px solid rgba(251,191,36,.3)}
+  .header .sub{color:var(--muted);font-size:13px}
+  .header .flag{padding:3px 10px;border-radius:6px;font-size:12px;font-weight:600}
+  .header .flag.internal{background:rgba(157,188,255,.18);color:#9dbcff;border:1px solid rgba(157,188,255,.4)}
+  .header .flag.public{background:rgba(134,239,172,.18);color:#86efac;border:1px solid rgba(134,239,172,.4)}
+  .header .publish-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;
+                       background:linear-gradient(180deg,#22c55e,#16a34a);color:#fff;
+                       border-radius:8px;font-size:13px;font-weight:600;
+                       box-shadow:0 2px 8px rgba(34,197,94,.3);transition:.15s}
+  .header .publish-btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
+
+  .wrap{max-width:1280px;margin:0 auto;padding:32px 40px}
+  .section-title{font-size:18px;font-weight:700;margin:32px 0 16px;display:flex;align-items:center;gap:10px}
+  .section-title .count{font-size:13px;color:var(--muted);font-weight:400}
+
+  /* 完整报告大卡 */
+  .full-card{display:block;background:linear-gradient(135deg,#1e293b,#0d1320);
+             border:1px solid rgba(251,191,36,.4);border-radius:14px;padding:32px;
+             transition:.2s;cursor:pointer;position:relative;overflow:hidden}
+  .full-card:hover{border-color:var(--primary);transform:translateY(-2px);
+                   box-shadow:0 12px 32px rgba(251,191,36,.15)}
+  .full-card::after{content:"→";position:absolute;right:32px;top:50%;transform:translateY(-50%);
+                    font-size:32px;color:var(--primary);opacity:.5}
+  .full-card .ico{font-size:36px;margin-bottom:12px}
+  .full-card h2{margin:0 0 8px;font-size:22px;color:#fff}
+  .full-card .desc{color:var(--muted);font-size:14px;line-height:1.7}
+  .full-card .stat-row{display:flex;gap:24px;margin-top:18px;flex-wrap:wrap}
+  .full-card .stat{display:flex;flex-direction:column;gap:2px}
+  .full-card .stat .v{font-size:20px;font-weight:700;color:var(--primary)}
+  .full-card .stat .l{font-size:12px;color:var(--muted)}
+  .report-tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:14px}
+  .md5-query{display:flex;flex:1;min-width:420px;gap:8px;padding:12px;background:var(--panel);
+              border:1px solid var(--line);border-radius:10px}
+  .md5-query input{flex:1;min-width:260px;border:1px solid var(--line);border-radius:7px;padding:9px 12px;
+                    background:var(--bg);color:var(--text);font:12px ui-monospace,Menlo,monospace;outline:none}
+  .md5-query input:focus{border-color:var(--info)}
+  .tool-btn{border:0;border-radius:7px;padding:9px 15px;background:linear-gradient(180deg,#3b82f6,#2563eb);
+            color:#fff;font-weight:700;cursor:pointer;white-space:nowrap;box-shadow:0 3px 10px rgba(37,99,235,.25)}
+  .tool-btn.light{background:linear-gradient(180deg,#fbbf24,#f59e0b);color:#422006}
+
+  /* 商品类别卡片网格 */
+  .cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+  .cat-card{display:block;background:var(--panel);border:1px solid var(--line);
+            border-radius:12px;padding:20px;transition:.18s;cursor:pointer;position:relative}
+  .cat-card:hover{border-color:var(--info);transform:translateY(-2px);
+                  box-shadow:0 8px 24px rgba(157,188,255,.1)}
+  .cat-card .ico{font-size:24px;margin-bottom:8px}
+  .cat-card h3{margin:0 0 6px;font-size:16px;color:#fff;font-weight:600}
+  .cat-card .meta-row{display:flex;align-items:center;gap:8px;margin:8px 0}
+  .cat-card .pill{background:rgba(157,188,255,.14);color:var(--info);padding:2px 8px;
+                  border-radius:10px;font-size:11px;border:1px solid rgba(157,188,255,.3)}
+  .cat-card .pill.warn{background:rgba(251,191,36,.14);color:var(--primary);border-color:rgba(251,191,36,.3)}
+  .cat-card .preview{margin-top:10px;color:var(--muted);font-size:12px;line-height:1.6;
+                     padding-top:10px;border-top:1px dashed var(--line)}
+  .cat-card .arrow{position:absolute;right:18px;top:18px;color:var(--muted);font-size:18px;transition:.15s}
+  .cat-card:hover .arrow{color:var(--info);transform:translateX(2px)}
+  .cat-card .cat-head{display:flex;align-items:center;gap:8px}
+  .cat-card .cat-head .ico{font-size:22px;margin:0}
+  /* 卡片内 6 项指标迷你表格 */
+  .cat-card .cm-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px;
+                     background:#0a0e18;border:1px solid var(--line);border-radius:6px;padding:8px}
+  .cat-card .cm-cell{text-align:center;padding:2px 4px}
+  .cat-card .cm-l{font-size:10px;color:var(--muted);margin-bottom:2px}
+  .cat-card .cm-v{font-size:13px;font-weight:600;color:var(--text)}
+  .cat-card .cm-v.muted{color:#475569;font-weight:400}
+  .cat-card .cm-u{font-size:9px;color:var(--muted);margin-left:1px;font-weight:400}
+
+  .empty{text-align:center;color:var(--muted);padding:60px 20px;background:var(--panel);
+         border:1px dashed var(--line);border-radius:10px}
+  .footer{text-align:center;color:var(--muted);font-size:12px;padding:32px;border-top:1px solid var(--line);margin-top:48px}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>单点批次 · 19 条</h1>
+  <span class="badge" id="countBadge">18 条素材</span>
+  <span class="flag internal">内部版（含金额）</span>
+  <span class="sub">导出于 2026-08-14 00:32</span>
+  <a class="publish-btn" target="_blank" rel="noopener" href="http://127.0.0.1:8766/dashboard/index.html?action=publish-github&date=20260814" title="把对外版发到 GitHub Pages 公网">📤 发布对外版到公网</a>
+</div>
+
+<div class="wrap">
+  <div class="section-title">
+    📊 完整报告
+    <span class="count">· 全量 <b style="color:var(--primary)">18</b> 条素材</span>
+  </div>
+  <a class="full-card" href="full.html">
+    <div class="ico">📊</div>
+    <h2>🔥 本周素材新鲜出炉！</h2>
+    <div class="desc" style="line-height:1.9">
+      一键解锁行业最新素材动态，高效跟上爆款节奏<br>
+      ✅ 每条素材带完整拆解：数据表现 + 脚本 + 关键帧 + 创意 prompt<br>
+      ✅ 支持多维度筛选：品类 / 开篇类型 / 素材风格
+    </div>
+    <div class="stat-row">
+      <div class="stat"><span class="v">18</span><span class="l">总素材数</span></div>
+      <div class="stat"><span class="v">0</span><span class="l">行业</span></div>
+      <div class="stat"><span class="v">0</span><span class="l">爆品名称</span></div>
+      <div class="stat"><span class="v">0</span><span class="l">爆品分类</span></div>
+    </div>
+  </a>
+  <div class="report-tools">
+    <button class="tool-btn light" id="themeToggle" type="button">☀ 整体亮色</button>
+  </div>
+
+  <div class="section-title" style="margin-top:36px">🎬 开篇类型｜4大核心开篇方式，吃透爆款开篇逻辑，高效整合素材资源 <span class="count">· <b style="color:var(--info)">4</b> 种开篇手法（18/18 条有解析）</span></div><div style="color:var(--muted);font-size:13px;margin:4px 0 2px">全方位拆解各类爆款开篇玩法，理清高起量创作套路，帮你快速盘活现有素材，大幅提升创作产出效率。</div><div style="margin-top:14px"><div class="cat-grid"><a class="cat-card" href="type_痛点对比.html"><span class="arrow">›</span><div class="cat-head"><div class="ico">🎯</div><h3>痛点对比</h3></div><div class="meta-row"><span class="pill">🎬 6 条素材</span></div><div class="cm-grid"><div class="cm-cell"><div class="cm-l">消耗</div><div class="cm-v">1.4<span class="cm-u">万</span></div></div><div class="cm-cell"><div class="cm-l">增长量</div><div class="cm-v">167.8<span class="cm-u">万</span></div></div><div class="cm-cell"><div class="cm-l">CTR</div><div class="cm-v">1.76<span class="cm-u">%</span></div></div><div class="cm-cell"><div class="cm-l">CVR</div><div class="cm-v">16.17<span class="cm-u">%</span></div></div><div class="cm-cell"><div class="cm-l">3s完播</div><div class="cm-v">34.7<span class="cm-u">%</span></div></div><div class="cm-cell"><div class="cm-l">播放时长</div><div class="cm-v">6.3<span class="cm-u">s</span></div></div></div><div class="preview">二级风格：颈纹痛点x达人口播开篇、3D动画x泪沟痛点放大开篇、专家口播x眼周痛点开篇、抗老痛点x前后对比开篇</div></a><a class="cat-card" href="type_明星背书.html"><span class="arrow">›</span><div class="cat-head"><div class="ico">⭐</div><h3>明星背书</h3></div><div class="meta-row"><span class="pill">🎬 7 条素材</span></div><div class="cm-grid"><div class="cm-cell"><div class="cm-l">消耗</div><div class="cm-v">0.6<span class="cm-u">万</span></div></div><div class="cm-cell"><div class="cm-l">增长量</div><div class="cm-v">52.6<span class="cm-u">万</span></div></div><div class="cm-cell"><div class="cm-l">CTR</div><div class="cm-v">2.00<span class="cm-u">%</span></div></div><div class="cm-cell"><div class="cm-l">CVR</div><div class="cm-v">10.63<span class="cm-u">%</span></div></div><div class="cm-cell"><div class="cm-l">3s完播</div><div class="cm-v">41.7<span class="cm-u">%</span></div></div><div class="cm-cell"><div class="cm-l">播放时长</div><div class="cm-v">9.0<span class="cm-u">s</span></div></div></div><div class="preview">二级风格：明星口播x居家线雕概念、明星直播切片x护肤分享、明星口播x痛点引入开篇、明星口播x选品背书开篇</div></a><a class="cat-card" href="type_达人开篇.html"><span class="arrow">›</span><div class="cat-head"><div class="ico">👤</div><h3>达人开篇</h3></div><div class="meta-row"><span class="pill">🎬 3 条素材</span></div><div class="cm-grid"><div class="cm-cell"><div class="cm-l">消耗</div><div class="cm-v">0.4<span class="cm-u">万</span></div></div><div class="cm-cell"><div class="cm-l">增长量</div><div class="cm-v">4.2<span class="cm-u">万</span></div></div><div class="cm-cell"><div class="cm-l">CTR</div><div class="cm-v">0.92<span class="cm-u">%</span></div></div><div class="cm-cell"><div class="cm-l">CVR</div><div class="cm-v">6.02<span class="cm-u">%</span></div></div><div class="cm-cell"><div class="cm-l">3s完播</div><div class="cm-v">40.0<span class="cm-u">%</span></div></div><div class="cm-cell"><div class="cm-l">播放时长</div><div class="cm-v">6.6<span class="cm-u">s</span></div></div></div><div class="preview">二级风格：闺蜜对话口播x产品教学、人设口播x成分科普开篇、达人口播x冰喷仪式感开篇</div></a><a class="cat-card" href="type_产品展示.html"><span class="arrow">›</span><div class="cat-head"><div class="ico">📦</div><h3>产品展示</h3></div><div class="meta-row"><span class="pill">🎬 2 条素材</span></div><div class="cm-grid"><div class="cm-cell"><div class="cm-l">消耗</div><div class="cm-v">0.3<span class="cm-u">万</span></div></div><div class="cm-cell"><div class="cm-l">增长量</div><div class="cm-v">0.1<span class="cm-u">万</span></div></div><div class="cm-cell"><div class="cm-l">CTR</div><div class="cm-v">2.27<span class="cm-u">%</span></div></div><div class="cm-cell"><div class="cm-l">CVR</div><div class="cm-v">11.07<span class="cm-u">%</span></div></div><div class="cm-cell"><div class="cm-l">3s完播</div><div class="cm-v">33.6<span class="cm-u">%</span></div></div><div class="cm-cell"><div class="cm-l">播放时长</div><div class="cm-v">7.4<span class="cm-u">s</span></div></div></div><div class="preview">二级风格：产品特写x痛点文案开篇、产品特写x护肤贴士开篇</div></a></div></div><div class="section-title">🛒 爆品品类｜1大潜力机会品类，读懂同行爆款玩法，拿捏品类打爆密码 <span class="count">· <b style="color:var(--info)">1</b> 个爆品（csv『拓品品类名称』）</span></div><div style="color:var(--muted);font-size:13px;margin:4px 0 2px">深度拆解热门高爆品类的素材创作逻辑，剖析同行起量核心玩法，精准捕捉品类机会，轻松复刻打爆思路。</div><div style="margin-top:6px;padding:10px 14px;background:rgba(157,188,255,.06);border:1px solid rgba(157,188,255,.2);border-radius:8px;color:var(--muted);font-size:12px;line-height:1.7">📌 <b style="color:var(--info)">规则说明</b>：当某类别素材数 &lt; 2 时，跳过『按爆品脚本框架/共性聚合』（无法跨条归纳）。月度复盘共 <b style="color:#fff">18</b> 条素材。</div><div style="margin-top:14px"><div class="cat-grid"><a class="cat-card" href="cat_未分类.html"><span class="arrow">›</span><div class="cat-head"><div class="ico">🧴</div><h3>未分类</h3></div><div class="meta-row"><span class="pill">📦 18 条素材</span><span class="pill warn" title="解析中或失败">⏳ 框架待生成</span></div><div class="cm-grid"><div class="cm-cell"><div class="cm-l">消耗</div><div class="cm-v">0.8<span class="cm-u">万</span></div></div><div class="cm-cell"><div class="cm-l">增长量</div><div class="cm-v">77.1<span class="cm-u">万</span></div></div><div class="cm-cell"><div class="cm-l">CTR</div><div class="cm-v">1.79<span class="cm-u">%</span></div></div><div class="cm-cell"><div class="cm-l">CVR</div><div class="cm-v">13.53<span class="cm-u">%</span></div></div><div class="cm-cell"><div class="cm-l">3s完播</div><div class="cm-v">37.2<span class="cm-u">%</span></div></div><div class="cm-cell"><div class="cm-l">播放时长</div><div class="cm-v">7.2<span class="cm-u">s</span></div></div></div><div class="preview">暂无解析样本</div></a></div></div>
+
+  <div id="auditRuleHead" style="margin-top:48px;margin-bottom:6px;padding:14px 18px;background:linear-gradient(90deg, rgba(96,165,250,.10), rgba(96,165,250,.02));border-left:4px solid var(--info);border-radius:6px;"><div style="font-size:18px;font-weight:700;color:var(--info)">🛡 审核规则应用</div><div style="color:var(--muted);font-size:13px;margin-top:4px">结合本期素材的审核规则应用案例与建议<span id="auditRuleUpd">（更新于 2026-08-10 15:45:47）</span></div></div><a id="auditRuleCard" class="full-card" data-audit-src="/api/audit-rule-link" data-audit-field="url_internal" href="https://stmc-audit-relax-0720-nei.pages.woa.com" target="_blank" rel="noopener" style=""><div class="ico">🛡</div><h2>📋 审核规则应用案例</h2><div class="desc" style="line-height:1.9">点击查看本期素材相关的审核规则应用与避坑指南<br>✅ 哪些创意 / 表述可能踩审核红线，如何规避<br>✅ 结合最新审核口径的实操建议</div><div class="stat-row"><div class="stat"><span class="v">→</span><span class="l">点击跳转查看</span></div></div></a><script>(function(){var c=document.getElementById("auditRuleCard");if(!c)return;var s=c.getAttribute("data-audit-src");if(!s)return;var fld=c.getAttribute("data-audit-field")||"url";fetch(s,{cache:"no-store"}).then(function(r){return r.ok?r.json():null;}).then(function(d){if(!d)return;var u=((d[fld]||"")+"").trim();var up=d.updated_at||"";var h=document.getElementById("auditRuleHead");var e=document.getElementById("auditRuleUpd");if(u){c.href=u;c.style.display="";if(h)h.style.display="";if(e)e.textContent=up?("（更新于 "+up+"）"):"";}else{c.style.display="none";if(h)h.style.display="none";}}).catch(function(){});})();</script>
+</div>
+
+<div class="footer">素材解析台 · 20260814 周报 · 内部版（含金额）</div>
+<script>
+(function(){
+  var t=document.getElementById('themeToggle'),saved='';try{saved=localStorage.getItem('stmc-report-theme')||'';}catch(_){}
+  if(saved==='light')document.documentElement.dataset.theme='light';
+  function sync(){if(t)t.textContent=document.documentElement.dataset.theme==='light'?'☾ 整体深色':'☀ 整体亮色';}
+  if(t)t.onclick=function(){var light=document.documentElement.dataset.theme!=='light';document.documentElement.dataset.theme=light?'light':'dark';try{localStorage.setItem('stmc-report-theme',light?'light':'dark');}catch(_){}sync();};sync();
+})();
+</script>
+</body>
+</html>
