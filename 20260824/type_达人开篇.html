@@ -97,6 +97,28 @@
   .top-card .head .rank{background:rgba(251,191,36,.14);color:var(--primary);padding:3px 10px;border-radius:6px;font-weight:700;font-size:13px;border:1px solid rgba(251,191,36,.3)}
   .top-card .head .meta-pill{font-size:11px;color:#cbd2e0;background:#172033;padding:2px 8px;border-radius:4px;border:1px solid var(--line)}
   .top-card .metrics-row{display:flex;flex-wrap:wrap;gap:8px;font-size:11px;color:var(--muted)}
+
+  /* 转化人群年龄饼图（默认折叠，点击展开） */
+  .age-pie{margin-top:6px;background:rgba(148,163,184,.06);border:1px solid var(--line);
+    border-radius:6px;padding:5px 9px}
+  .age-pie summary{cursor:pointer;font-size:11px;color:var(--info);outline:none;
+    user-select:none;list-style:none}
+  .age-pie summary::-webkit-details-marker{display:none}
+  .age-pie summary::before{content:"▸ ";color:var(--muted)}
+  .age-pie[open] summary::before{content:"▾ "}
+  .age-sum-tag{background:rgba(79,140,255,.16);border:1px solid rgba(79,140,255,.38);
+    border-radius:3px;padding:1px 5px;font-size:10px}
+  .age-body{display:flex;gap:12px;align-items:flex-start;margin-top:8px;flex-wrap:wrap}
+  .age-right{flex:1 1 170px;min-width:160px}
+  .age-bks{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:6px}
+  .age-bk{font-size:10px;color:var(--muted);background:rgba(148,163,184,.12);
+    border:1px solid rgba(148,163,184,.28);border-radius:4px;padding:1px 6px}
+  .age-bk.on{background:rgba(79,140,255,.2);border-color:rgba(79,140,255,.5);
+    color:var(--info);font-weight:600}
+  .age-legend{display:flex;gap:3px 10px;flex-wrap:wrap}
+  .age-lg{font-size:10px;color:var(--fg);display:inline-flex;align-items:center;
+    gap:3px;white-space:nowrap;opacity:.85}
+  .age-lg i{width:7px;height:7px;border-radius:2px;display:inline-block;flex:0 0 auto}
   .top-card .metrics-row b{color:var(--text)}
   .top-card .desc{font-size:12px;color:#cbd2e0;line-height:1.7;
                   display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
