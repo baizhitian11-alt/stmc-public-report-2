@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1200,initial-scale=1">
+<title>达人开篇（开篇类型） · 20260903 周报</title>
+<style>
+  :root{--bg:#0a0d14;--panel:#101622;--panel2:#0d1320;--line:#1f2937;
+        --text:#e6edf3;--muted:#94a3b8;--primary:#fbbf24;--success:#86efac;--info:#9dbcff}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+       font:14px/1.6 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
+  a{color:var(--info);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .header{padding:24px 40px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+          background:linear-gradient(180deg,#0d1320,#0a0d14);border-bottom:1px solid var(--line)}
+  .header .nav{color:var(--muted);font-size:13px}
+  .header .nav a{color:var(--muted)}
+  .header h1{margin:0;font-size:22px;font-weight:700}
+  .header .badge{background:rgba(157,188,255,.14);color:var(--info);padding:4px 10px;
+                 border-radius:12px;font-size:12px;border:1px solid rgba(157,188,255,.3)}
+  .wrap{max-width:1280px;margin:0 auto;padding:24px 40px 60px}
+  .section{margin-top:32px}
+  .section h2{margin:0 0 16px;font-size:18px;font-weight:700;display:flex;align-items:center;gap:10px}
+  .section h2 .count{font-size:13px;color:var(--muted);font-weight:400}
+
+  /* ① 指标均值 */
+  .metrics-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;
+                background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px}
+  .m-cell{text-align:center}
+  .m-cell .lab{font-size:12px;color:var(--muted);margin-bottom:6px}
+  .m-cell .val{font-size:22px;font-weight:700;color:var(--text)}
+  .m-cell .val.muted{color:var(--muted);font-size:18px}
+  .m-cell .unit{font-size:12px;color:var(--muted);margin-left:2px}
+
+  /* ② 脚本框架 A-B-C-D-E */
+  .frame-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;
+               background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px}
+  .stage-card{background:#0a0e18;border:1px solid var(--line);border-radius:8px;padding:14px;position:relative}
+  .stage-card .stg-ix{position:absolute;top:10px;right:12px;font-size:11px;font-weight:700;color:var(--primary);
+                      background:rgba(251,191,36,.14);padding:2px 7px;border-radius:6px;border:1px solid rgba(251,191,36,.3)}
+  .stage-card .stg-name{font-size:14px;font-weight:600;color:#fff;margin:0 0 6px;padding-right:36px}
+  .stage-card .stg-purpose{font-size:12px;color:#cbd2e0;line-height:1.6;margin-bottom:6px}
+  .stage-card .stg-time{font-size:11px;color:var(--info);margin-bottom:6px}
+  .stage-card .stg-pattern{font-size:11px;color:var(--muted);line-height:1.6;border-top:1px dashed var(--line);padding-top:6px;margin-top:6px}
+  .frame-empty{padding:32px;text-align:center;color:var(--muted);font-size:13px;
+               background:var(--panel);border:1px dashed var(--line);border-radius:12px}
+
+  /* ②.b 方法论新模块（v2，2026-05-28 升级，对齐看板提示词）*/
+  .meth-block{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:14px}
+  .meth-block .mh{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:700;color:#fff;margin:0 0 12px}
+  .meth-block .mh .ic{font-size:16px}
+  .meth-block .mh .sub{font-size:12px;color:var(--muted);font-weight:400}
+  /* 双词云：左右两列 */
+  .wc-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .wc-col{background:#0a0e18;border:1px solid var(--line);border-radius:8px;padding:12px}
+  .wc-col h4{margin:0 0 10px;font-size:12px;color:var(--info);font-weight:600;display:flex;align-items:center;gap:6px}
+  .wc-col h4 .n{color:var(--muted);font-weight:400;font-size:11px}
+  .wc-words{display:flex;flex-wrap:wrap;gap:6px}
+  .wc-w{padding:4px 10px;border-radius:14px;background:#172033;border:1px solid var(--line);font-size:12px;color:#cbd2e0}
+  .wc-w.s1{font-size:15px;color:#fff;background:rgba(251,191,36,.16);border-color:rgba(251,191,36,.45)}
+  .wc-w.s2{font-size:13px;color:#fff;background:rgba(157,188,255,.14);border-color:rgba(157,188,255,.4)}
+  .wc-w.s3{font-size:12px;color:#cbd2e0}
+  .wc-w.s4{font-size:11px;color:var(--muted)}
+  /* persona 三列 */
+  .persona-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .persona-cell{background:#0a0e18;border:1px solid var(--line);border-radius:8px;padding:12px}
+  .persona-cell .pl{font-size:11px;color:var(--info);font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .persona-cell .pv{font-size:12px;color:#cbd2e0;line-height:1.7}
+  /* 开篇细分 */
+  .subt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+  .subt-cell{background:#0a0e18;border:1px solid var(--line);border-radius:8px;padding:12px}
+  .subt-cell .stn{font-size:13px;font-weight:700;color:#fff;margin:0 0 4px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .subt-cell .stn .rec{font-size:11px;color:var(--primary);font-weight:600}
+  .subt-cell .std{font-size:12px;color:#cbd2e0;line-height:1.6}
+  /* 爆款话术 */
+  .viral-list{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .viral-list li{background:#0a0e18;border:1px solid var(--line);border-left:3px solid var(--primary);border-radius:6px;padding:10px 12px;font-size:12px;color:#cbd2e0;line-height:1.7}
+  /* 跑量关键点 */
+  .runk-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+  .runk-list li{background:#0a0e18;border:1px solid var(--line);border-radius:6px;padding:10px 12px;font-size:12px;color:#cbd2e0;line-height:1.7}
+  @media (max-width:760px){
+    .wc-grid,.persona-grid{grid-template-columns:1fr}
+    .viral-list{grid-template-columns:1fr}
+  }
+
+  /* ③ Top5 紧凑卡片：左封面 + 右关键帧并列 */
+  .top-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:14px;
+            display:grid;grid-template-columns:200px 1fr;gap:18px}
+  .top-card .cover{display:flex;flex-direction:column;gap:8px}
+  .top-card .cover img{width:100%;aspect-ratio:9/16;object-fit:cover;display:block;background:#000;border-radius:8px;overflow:hidden;border:1px solid var(--line)}
+  .top-card .cover .placeholder{display:flex;align-items:center;justify-content:center;aspect-ratio:9/16;background:#000;border-radius:8px;border:1px solid var(--line);color:#475569;font-size:12px}
+  .top-card .cover .top-video-link{display:block;text-align:center;font-size:12px;padding:6px 8px;border-radius:6px;
+                                    color:var(--info);background:rgba(157,188,255,.1);border:1px solid rgba(157,188,255,.35)}
+  .top-card .cover .top-video-link:hover{background:rgba(157,188,255,.2)}
+  .top-card .info{display:flex;flex-direction:column;gap:10px;min-width:0}
+  .top-card .head{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .top-card .head .rank{background:rgba(251,191,36,.14);color:var(--primary);padding:3px 10px;border-radius:6px;font-weight:700;font-size:13px;border:1px solid rgba(251,191,36,.3)}
+  .top-card .head .meta-pill{font-size:11px;color:#cbd2e0;background:#172033;padding:2px 8px;border-radius:4px;border:1px solid var(--line)}
+  .top-card .metrics-row{display:flex;flex-wrap:wrap;gap:8px;font-size:11px;color:var(--muted)}
+
+  /* 转化人群年龄饼图（默认折叠，点击展开） */
+  .age-pie{margin-top:6px;background:var(--panel2);border:1px solid var(--line);
+    border-radius:6px;padding:5px 9px}
+  .age-pie summary{cursor:pointer;font-size:11px;color:var(--info);outline:none;
+    user-select:none;list-style:none}
+  .age-pie summary::-webkit-details-marker{display:none}
+  .age-pie summary::before{content:"▸ ";color:var(--muted)}
+  .age-pie[open] summary::before{content:"▾ "}
+  .age-sum-tag{background:rgba(79,140,255,.16);border:1px solid rgba(79,140,255,.38);
+    border-radius:3px;padding:1px 5px;font-size:10px}
+  .age-body{display:flex;gap:12px;align-items:flex-start;margin-top:8px;flex-wrap:wrap}
+  .age-right{flex:1 1 170px;min-width:160px}
+  .age-bks{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:6px}
+  .age-bk{font-size:10px;color:var(--muted);background:rgba(148,163,184,.12);
+    border:1px solid rgba(148,163,184,.28);border-radius:4px;padding:1px 6px}
+  .age-bk.on{background:rgba(79,140,255,.2);border-color:rgba(79,140,255,.5);
+    color:var(--info);font-weight:600}
+  .age-legend{display:flex;gap:3px 10px;flex-wrap:wrap}
+  .age-lg{font-size:10px;color:var(--fg);display:inline-flex;align-items:center;
+    gap:3px;white-space:nowrap;opacity:.85}
+  .age-lg i{width:7px;height:7px;border-radius:2px;display:inline-block;flex:0 0 auto}
+  .age-svg path,.age-svg circle{stroke:var(--panel2)}
+  .top-card .metrics-row b{color:var(--text)}
+  .top-card .desc{font-size:12px;color:#cbd2e0;line-height:1.7;
+                  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .top-card .frames{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+  .top-card .frame{background:#0a0e18;border:1px solid var(--line);border-radius:6px;overflow:hidden;aspect-ratio:9/16;position:relative}
+  .top-card .frame img{width:100%;height:100%;object-fit:cover;display:block}
+  .top-card .frame .fcap{position:absolute;left:0;right:0;bottom:0;padding:3px 6px;background:linear-gradient(transparent,rgba(0,0,0,.85));font-size:10px;color:#fff;line-height:1.3}
+  .top-card .frame .fname{font-weight:600}
+  .top-card .frame .ftime{color:#9dbcff;font-size:9px}
+  .top-card .frame.no-img{display:flex;align-items:center;justify-content:center;color:#475569;font-size:11px;text-align:center;padding:8px}
+
+  /* 黄金 3s prompt */
+  .hp{background:#0a0e18;border-left:3px solid var(--info);border-radius:0 6px 6px 0;padding:10px 12px;margin-top:8px}
+  .hp .hp-h{font-size:12px;font-weight:600;color:var(--info);margin-bottom:4px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .hp .hp-actions{margin-left:auto;display:inline-flex;gap:6px}
+  .hp .hp-btn{display:inline-flex;align-items:center;gap:4px;padding:2px 9px;font-size:10px;color:#cbd2e0;background:#172033;border:1px solid var(--line);border-radius:4px;cursor:pointer;text-decoration:none;font-family:inherit}
+  .hp .hp-btn:hover{background:#1e293b;color:#fff}
+  .hp .hp-t{font-size:12px;color:#cbd2e0;line-height:1.7;white-space:pre-wrap;word-break:break-word}
+  .md5-actions{display:flex;gap:7px;flex-wrap:wrap}
+  .md5-action{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);border-radius:6px;
+              padding:5px 9px;background:#172033;color:var(--info);font:11px ui-monospace,Menlo,monospace;
+              text-decoration:none;cursor:pointer}
+  .md5-action:hover{border-color:var(--info);background:#1e293b;color:#fff}
+  .detail-md5-tool{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 24px;padding:14px 16px;
+                   background:var(--panel);border:1px solid var(--line);border-radius:10px}
+  .detail-md5-tool .tool-label{font-size:12px;font-weight:700;color:var(--text);white-space:nowrap}
+  .detail-md5-tool form{display:flex;gap:8px;flex:1;min-width:420px}
+  .detail-md5-tool input{flex:1;min-width:260px;border:1px solid var(--line);border-radius:7px;padding:9px 12px;
+                         background:var(--panel2);color:var(--text);font:12px ui-monospace,Menlo,monospace;outline:none}
+  .detail-md5-tool input:focus{border-color:var(--info);box-shadow:0 0 0 2px rgba(157,188,255,.14)}
+  .detail-md5-list{display:flex;gap:6px;flex-wrap:wrap}
+  .meth-search{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 16px;padding:12px 15px;
+               background:linear-gradient(180deg,rgba(79,140,255,.08),var(--panel));
+               border:1px solid var(--line);border-radius:10px}
+  .meth-search .tool-label{font-size:12px;font-weight:700;color:var(--text)}
+  .meth-search form{display:flex;gap:8px;flex:1;min-width:420px}
+  .meth-search input{flex:1;min-width:240px;border:1px solid var(--line);border-radius:7px;padding:9px 12px;
+                     background:var(--panel2);color:var(--text);font:12px system-ui,sans-serif;outline:none}
+  .meth-search input:focus{border-color:var(--info);box-shadow:0 0 0 2px rgba(157,188,255,.14)}
+  .meth-search-res{flex-basis:100%;font-size:12px;color:var(--info)}
+  .highlight-method-summary{font-size:13px;color:var(--text);line-height:1.8;margin-bottom:10px}
+  .highlight-method-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+  .highlight-method-chip{padding:4px 9px;border-radius:999px;background:var(--panel2);border:1px solid var(--line);
+                         color:var(--text);font-size:11px}
+  .highlight-method-samples{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px}
+  .highlight-method-sample{padding:9px 11px;border-radius:7px;background:var(--panel2);border:1px solid var(--line);
+                           color:var(--text);font-size:11px;line-height:1.65}
+  .highlight-method-sample code{color:var(--info);font-family:ui-monospace,Menlo,monospace}
+  .highlight-content-title{margin:14px 0 8px;font-size:12px;font-weight:700;color:var(--text)}
+  .highlight-content-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px}
+  .highlight-content-card{padding:10px 11px;border:1px solid var(--line);border-radius:8px;background:var(--panel2)}
+  .highlight-content-card .name{font-size:12px;font-weight:700;color:var(--text);margin-bottom:5px}
+  .highlight-content-card .stats{font-size:11px;color:var(--muted);line-height:1.65}
+  .highlight-content-card .example{margin-top:6px;font-size:11px;color:var(--text);line-height:1.55}
+  .highlight-findings{margin:9px 0 0;padding-left:20px;color:var(--text);font-size:12px;line-height:1.8}
+  .top-card[hidden]{display:none!important}
+  .top-card.md5-hit{border-color:var(--primary);box-shadow:0 0 0 3px rgba(251,191,36,.22),0 12px 30px rgba(0,0,0,.18)}
+  .md5-label{cursor:default;user-select:all;word-break:break-all}
+
+  html[data-theme="light"]{--bg:#f7f3ea;--panel:#fffdf8;--panel2:#f1eadf;--line:#d9d0c2;--text:#292822;
+                            --muted:#716c62;--primary:#9a5f44;--info:#66734d;--success:#66734d;--danger:#b45f52}
+  html[data-theme="light"] body{background:var(--bg);color:var(--text)}
+  html[data-theme="light"] .header{background:rgba(247,243,234,.96);box-shadow:0 1px 0 rgba(84,70,56,.08)}
+  html[data-theme="light"] .section h2,html[data-theme="light"] .sub h3,html[data-theme="light"] .panel h3,
+  html[data-theme="light"] .frame-section h3,html[data-theme="light"] .stage-card .stg-name,
+  html[data-theme="light"] .meth-block .mh,html[data-theme="light"] .subt-cell .stn{color:var(--text)}
+  html[data-theme="light"] .stage-card .stg-purpose,html[data-theme="light"] .persona-cell .pv,
+  html[data-theme="light"] .subt-cell .std,html[data-theme="light"] .viral-list li,
+  html[data-theme="light"] .runk-list li,html[data-theme="light"] .top-card .desc,
+  html[data-theme="light"] .hp .hp-t,html[data-theme="light"] .hp .hp-btn,
+  html[data-theme="light"] .top-card .head .meta-pill{color:#58534b}
+  html[data-theme="light"] .stage-card,html[data-theme="light"] .wc-col,html[data-theme="light"] .persona-cell,
+  html[data-theme="light"] .subt-cell,html[data-theme="light"] .viral-list li,html[data-theme="light"] .runk-list li,
+  html[data-theme="light"] .top-card .frame,html[data-theme="light"] .hp{background:var(--panel2)}
+  html[data-theme="light"] .stage-card .stg-purpose,html[data-theme="light"] .stage-card .stg-pattern,
+  html[data-theme="light"] .meth-block .mh .sub,html[data-theme="light"] .section h2 .count{color:#625c53}
+  html[data-theme="light"] .top5-group-label{color:var(--info)!important}
+  html[data-theme="light"] .wc-w,html[data-theme="light"] .hp .hp-btn,
+  html[data-theme="light"] .top-card .head .meta-pill,html[data-theme="light"] .md5-action{background:#eee6da;color:#58534b}
+  html[data-theme="light"] .wc-w.s1,html[data-theme="light"] .wc-w.s2{color:var(--text)}
+  html[data-theme="light"] .top-card .cover img,html[data-theme="light"] .top-card .cover .placeholder{background:#e8dfd2}
+  html[data-theme="light"] .md5-action:hover{background:#e5dacb;color:var(--text)}
+
+  .footer{text-align:center;color:var(--muted);font-size:12px;padding:32px;border-top:1px solid var(--line);margin-top:48px}
+  #_tip{position:fixed;left:50%;top:24px;transform:translateX(-50%);padding:8px 16px;border-radius:8px;font-size:12px;color:#fff;z-index:1000;display:none;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+  #_tip.ok{background:#15803d}
+</style>
+</head>
+<body>
+<div class="header">
+  <span class="nav"><a href="index.html">← 返回首页</a></span>
+  <span class="nav">·</span>
+  <span class="nav"><a href="full.html">完整报告</a></span>
+  <h1 style="margin-left:12px">🧴 达人开篇（开篇类型）</h1>
+  <span class="badge">12 条素材</span>
+  <button class="md5-action" id="themeToggle" type="button" style="margin-left:auto;font-family:inherit">☀ 整体亮色</button>
+</div>
+
+<div class="wrap">
+  <section class="detail-md5-tool"><span class="tool-label">⌕ 按 MD5 检索本类型 10 条代表素材</span><form id="detailMd5Form"><input id="detailMd5Input" type="search" placeholder="粘贴客户发来的完整或部分 MD5，在本页定位视频" autocomplete="off"><button class="md5-action" type="submit">检索视频</button></form></section>
+  <!-- ① 指标均值 -->
+  <section class="section">
+    <h2>📊 指标均值 <span class="count">· 清晰呈现本类素材基准指标，帮你快速定位差距，校准优化方向</span></h2>
+    <div class="metrics-grid"><div class="m-cell"><div class="lab">消耗(均值)</div><span class="val">2.1<span class="unit">万</span></span></div><div class="m-cell"><div class="lab">增长量(均值)</div><span class="val muted">—</span></div><div class="m-cell"><div class="lab">CTR (均值)</div><span class="val">3.21<span class="unit">%</span></span></div><div class="m-cell"><div class="lab">CVR (均值)</div><span class="val">4.86<span class="unit">%</span></span></div><div class="m-cell"><div class="lab">3s完播 (均值)</div><span class="val muted">—</span></div><div class="m-cell"><div class="lab">播放时长(均值)</div><span class="val muted">—</span></div></div>
+  </section>
+
+  <!-- ② 方法论（脚本框架 + 词云 + 模特画像 + 爆款话术 + 跑量关键点） -->
+  <section class="section">
+    <h2>📚 方法论沉淀 <span class="count">· 拆解开篇类型核心打法，吃透爆款底层逻辑，轻松拿捏创作节奏</span></h2>
+    <section class="meth-search"><span class="tool-label">⌕ 集中检索</span><form id="methSearchForm"><input id="methSearchInput" type="search" placeholder="输入 MD5 / 客户 / 品类 / 开篇类型 / 脚本关键词，直接跳到下方对应视频" autocomplete="off"><button class="md5-action" type="submit">跳到视频</button><button class="md5-action" type="button" id="methSearchReset">重置</button></form><div class="meth-search-res" id="methSearchRes"></div></section>
+    <div class="frame-empty">该类别下样本不足或解析尚未跑完，暂无方法论。<br>需 ≥2 条带『素材结构』的素材才能聚合。</div>
+  </section>
+
+  <!-- ③ 代表素材关键帧拆解（品牌 Top5 + 非品牌 Top5）-->
+  <section class="section">
+    <h2>🏆 代表素材关键帧拆解 <span class="count">· 品牌 / 非品牌各 Top5（按消耗降序）</span></h2>
+    <div class="top5-group-label" style="margin:18px 0 10px;font-weight:600;color:#86efac">🏬 非品牌素材 Top5（按消耗降序）</div><div class="top-card" data-card-md5="c75d08e733d0c6bcd3ab21395db80f8a" data-card-search="c75d08e733d0c6bcd3ab21395db80f8a    局部贴-涂抹面膜  达人开篇 开篇类型属于达人口播+草本配方展示型。开篇以『一个月后老公不认识你』的悬念话术吸引注意力，同步展示草本面膜敷脸画面和四味中药配方。接着达人以专业人设口播强调『立夏到三伏是敷淡斑膜的黄金时间』，并给出7天试用承诺。重点展示售后保障（七天无理由" data-card-name="#1 局部贴-涂抹面膜"><div class="cover"><img src="assets/13f20efe5919a6ab.jpg" alt="cover"><a class="top-video-link" href="http://adsmind.gdtimg.com/ads_svp_video__0bc3paa3uaabo4acw5k5f5vbw6aexj4adosa.f0.mp4?dis_k=c19421f837a339f49ed9354857925c3b&amp;dis_t=1784451351&amp;m=c75d08e733d0c6bcd3ab21395db80f8a" target="_blank" rel="noopener">🔗 原视频</a></div><div class="info"><div class="head"><span class="rank">#1</span><span class="meta-pill">🧴 局部贴-涂抹面膜</span><span class="meta-pill" style="color:#fbbf24;border-color:rgba(251,191,36,.4)">🎬 达人开篇</span></div><div class="metrics-row">消耗 <b>4.4万</b> · 增长量 <b>—</b> · CTR <b>1.98%</b> · CVR <b>7.62%</b> · 3s完播 <b>—</b> · 播放时长 <b>—</b></div><div class="md5-actions"><span class="md5-action md5-label">🆔 MD5 · c75d08e733d0c6bcd3ab21395db80f8a</span></div><div class="desc">开篇类型属于达人口播+草本配方展示型。开篇以『一个月后老公不认识你』的悬念话术吸引注意力，同步展示草本面膜敷脸画面和四味中药配方。接着达人以专业人设口播强调『立夏到三伏是敷淡斑膜的黄金时间』，并给出7天试用承诺。重点展示售后保障（七天无理由退换、包运费险）和周年大促福利（拍一发二），降低下单门槛。插入路人采访片段，用『便宜好用』『瞒着老公也要买』等口碑证言增强信任。结尾达人以行业内人士身份背书，详解草本成分和烟酰胺配方，强化产品专业度，呼吁长斑用户尝试。</div><div class="frames"><div class="frame"><img src="assets/253a5dbbb2e1bbb0.jpg" alt="frame1"><div class="fcap"><div class="fname">悬念开场</div><div class="ftime">0-3s</div></div></div><div class="frame"><img src="assets/9de8c0f5b8b45c99.jpg" alt="frame2"><div class="fcap"><div class="fname">痛点引入</div><div class="ftime">3-9s</div></div></div><div class="frame"><img src="assets/014a663ccbff7051.jpg" alt="frame3"><div class="fcap"><div class="fname">产品推介</div><div class="ftime">9-19s</div></div></div><div class="frame"><img src="assets/1e308a3a56c383a4.jpg" alt="frame4"><div class="fcap"><div class="fname">售后保障</div><div class="ftime">19-26s</div></div></div><div class="frame"><img src="assets/587d0d3fe509e0a2.jpg" alt="frame5"><div class="fcap"><div class="fname">促销福利</div><div class="ftime">26-32s</div></div></div></div><div class="hp"><div class="hp-h">⚡ 黄金 3s Prompt<span class="hp-actions"><button class="hp-btn" data-hook-copy="中景镜头拍摄女性躺姿，木质刮板正将黄绿色草本面膜敷在脸上，质地浓稠可见。画面上方大字弹出『一个月后老公不认识你』制造悬念。配音用成熟女声念出配方：『黄芪五克，白芷五克』。1.5秒后快切手写配方卡特写，四味中药名称依次出现。整体节奏紧凑，用『老公不认识』的夸张承诺+可视化草本配方双重钩子，激发用户好奇心停留。">📋 复制</button><a class="hp-btn" href="https://admuse.qq.com/#/index" target="_blank" rel="noopener">🚀 妙思</a></span></div><div class="hp-t">中景镜头拍摄女性躺姿，木质刮板正将黄绿色草本面膜敷在脸上，质地浓稠可见。画面上方大字弹出『一个月后老公不认识你』制造悬念。配音用成熟女声念出配方：『黄芪五克，白芷五克』。1.5秒后快切手写配方卡特写，四味中药名称依次出现。整体节奏紧凑，用『老公不认识』的夸张承诺+可视化草本配方双重钩子，激发用户好奇心停留。</div></div></div></div><div class="top-card" data-card-md5="f56fd39c7b55b2efcd21d7d19bb261e2" data-card-search="f56fd39c7b55b2efcd21d7d19bb261e2    局部贴-祛斑贴 / 美妆护肤-面部洗护-面部  达人开篇 开篇类型属于人设口播+明星背书型。开篇以56岁女性出镜配合『公公天天来我家』悬念文案制造好奇，紧接着展示淡斑贴起泡的视觉奇观，配合惊叹配音强化冲击力。随后切入64岁陈女士的街头采访，引出刘晓庆推荐背书，刘晓庆正式出镜介绍产品功效并承诺为粉丝" data-card-name="#2 局部贴-祛斑贴 / 美妆护肤-面部洗护-面部"><div class="cover"><img src="assets/63adb9e821552437.jpg" alt="cover"><a class="top-video-link" href="http://adsmind.gdtimg.com/ads_svp_video__0bc3kiabyaaaqqack42gojvbuuqedrjaahca.f0.mp4?dis_k=3f17e6a2df00543916530b348830d58b&amp;dis_t=1782987377&amp;m=f56fd39c7b55b2efcd21d7d19bb261e2&amp;sha256=a8985d3bd3e2bfdb750e20591faee8f9f53d4996fb88d32de1ad8e355fc874b8" target="_blank" rel="noopener">🔗 原视频</a></div><div class="info"><div class="head"><span class="rank">#2</span><span class="meta-pill">🧴 局部贴-祛斑贴 / 美妆护肤-面部洗护-面部</span><span class="meta-pill" style="color:#fbbf24;border-color:rgba(251,191,36,.4)">🎬 达人开篇</span></div><div class="metrics-row">消耗 <b>3.3万</b> · 增长量 <b>—</b> · CTR <b>2.91%</b> · CVR <b>4.03%</b> · 3s完播 <b>—</b> · 播放时长 <b>—</b></div><div class="md5-actions"><span class="md5-action md5-label">🆔 MD5 · f56fd39c7b55b2efcd21d7d19bb261e2</span></div><div class="desc">开篇类型属于人设口播+明星背书型。开篇以56岁女性出镜配合『公公天天来我家』悬念文案制造好奇，紧接着展示淡斑贴起泡的视觉奇观，配合惊叹配音强化冲击力。随后切入64岁陈女士的街头采访，引出刘晓庆推荐背书，刘晓庆正式出镜介绍产品功效并承诺为粉丝争取福利。中段穿插多位用户使用演示与证言，强调使用方法简单、效果显著。后段展示工厂溯源画面说明价格便宜原因，最后以『全场一折、拍一发四』的促销信息引导下单。</div><div class="frames"><div class="frame"><img src="assets/cd93c22f81fee869.jpg" alt="frame1"><div class="fcap"><div class="fname">悬念开篇</div><div class="ftime">0-3s</div></div></div><div class="frame"><img src="assets/50d5374353ee1305.jpg" alt="frame2"><div class="fcap"><div class="fname">效果演示</div><div class="ftime">4-10s</div></div></div><div class="frame"><img src="assets/a5986bd40d3a2598.jpg" alt="frame3"><div class="fcap"><div class="fname">用户证言</div><div class="ftime">11-21s</div></div></div><div class="frame"><img src="assets/bf356e20ab9f7548.jpg" alt="frame4"><div class="fcap"><div class="fname">明星背书</div><div class="ftime">22-46s</div></div></div><div class="frame"><img src="assets/133181e93957156c.jpg" alt="frame5"><div class="fcap"><div class="fname">多场景演示</div><div class="ftime">47-70s</div></div></div></div><div class="hp"><div class="hp-h">⚡ 黄金 3s Prompt<span class="hp-actions"><button class="hp-btn" data-hook-copy="中景镜头拍摄一位气质端庄的56岁中年女性，面带微笑直视镜头，背景为温馨室内环境。画面中央叠加醒目黄色大字『56岁的我自从用了这个淡斑贴，公公天天来我家』，字体加粗带阴影。无配音，仅背景轻音乐。悬念点在于『公公天天来我家』的反常规表述，制造好奇心理，让观众想知道淡斑贴和公公有什么关系，从而停留观看。">📋 复制</button><a class="hp-btn" href="https://admuse.qq.com/#/index" target="_blank" rel="noopener">🚀 妙思</a></span></div><div class="hp-t">中景镜头拍摄一位气质端庄的56岁中年女性，面带微笑直视镜头，背景为温馨室内环境。画面中央叠加醒目黄色大字『56岁的我自从用了这个淡斑贴，公公天天来我家』，字体加粗带阴影。无配音，仅背景轻音乐。悬念点在于『公公天天来我家』的反常规表述，制造好奇心理，让观众想知道淡斑贴和公公有什么关系，从而停留观看。</div></div></div></div><div class="top-card" data-card-md5="6944c4d289d3a8563b31bf37966cd5d3" data-card-search="6944c4d289d3a8563b31bf37966cd5d3    局部贴-涂抹面膜  达人开篇 开篇类型属于中医情景剧引入+达人深度口播型。开篇以老中医爷爷向小女孩传授淡斑古方的情景剧切入，用『颧骨长斑敷黄芪、鼻梁长斑敷白芷、额头长斑敷三七』建立中药专业感。接着阳姐以品牌主理人身份出镜，强调立夏后是淡斑黄金期，制造紧迫感。重点展示产品" data-card-name="#3 局部贴-涂抹面膜"><div class="cover"><img src="assets/a2dd44540926767c.jpg" alt="cover"><a class="top-video-link" href="http://adsmind.gdtimg.com/ads_svp_video__0bc3kqaiaaaa4aabljkninvbuvaeqbkabaca.f0.mp4?dis_k=46aa0a7cb3d2e8e96380e2a85d602532&amp;dis_t=1783846806&amp;m=6944c4d289d3a8563b31bf37966cd5d3&amp;sha256=6e336c75bdf80f801e56b8bd7fb4dd57d6d67ea36424a0cd15a77d8271d52ff4" target="_blank" rel="noopener">🔗 原视频</a></div><div class="info"><div class="head"><span class="rank">#3</span><span class="meta-pill">🧴 局部贴-涂抹面膜</span><span class="meta-pill" style="color:#fbbf24;border-color:rgba(251,191,36,.4)">🎬 达人开篇</span></div><div class="metrics-row">消耗 <b>2.8万</b> · 增长量 <b>—</b> · CTR <b>2.30%</b> · CVR <b>6.09%</b> · 3s完播 <b>—</b> · 播放时长 <b>—</b></div><div class="md5-actions"><span class="md5-action md5-label">🆔 MD5 · 6944c4d289d3a8563b31bf37966cd5d3</span></div><div class="desc">开篇类型属于中医情景剧引入+达人深度口播型。开篇以老中医爷爷向小女孩传授淡斑古方的情景剧切入，用『颧骨长斑敷黄芪、鼻梁长斑敷白芷、额头长斑敷三七』建立中药专业感。接着阳姐以品牌主理人身份出镜，强调立夏后是淡斑黄金期，制造紧迫感。重点展示产品成分（珍珠粉、黑灵芝）和使用方法，穿插年轻女性上脸演示。加入街头素人采访『口红可以不买但这个瞒着老公也要买』增强说服力。结尾用阶梯式降价（99→79→69→一折）和颁奖画面组合，强化品牌实力与促销力度，引导下单。</div><div class="frames"><div class="frame"><img src="assets/53bddb22af5958c0.jpg" alt="frame1"><div class="fcap"><div class="fname">情景剧开篇</div><div class="ftime">0-10s</div></div></div><div class="frame"><img src="assets/8c566a9e69f7d071.jpg" alt="frame2"><div class="fcap"><div class="fname">达人口播</div><div class="ftime">10-19s</div></div></div><div class="frame"><img src="assets/1dc254bc2d7b7aab.jpg" alt="frame3"><div class="fcap"><div class="fname">产品亮相</div><div class="ftime">19-25s</div></div></div><div class="frame"><img src="assets/8b4debf5087d58f9.jpg" alt="frame4"><div class="fcap"><div class="fname">用户证言</div><div class="ftime">25-36s</div></div></div><div class="frame"><img src="assets/80a0520e793116e7.jpg" alt="frame5"><div class="fcap"><div class="fname">卖点轰炸</div><div class="ftime">36-57s</div></div></div></div><div class="hp"><div class="hp-h">⚡ 黄金 3s Prompt<span class="hp-actions"><button class="hp-btn" data-hook-copy="古色古香的中药房场景，白胡子老中医手持小秤站在药柜前，旁边站着一个穿粉色旗袍的小女孩仰头看他。老中医慈祥微笑，小女孩用童声说『爷爷你再说一遍』，随后老中医语重心长地说『颧骨长斑敷黄芪，鼻梁长斑敷白芷』。画面色调温暖怀旧，节奏舒缓但信息密集，用中医传承的仪式感制造专业信任钩子。">📋 复制</button><a class="hp-btn" href="https://admuse.qq.com/#/index" target="_blank" rel="noopener">🚀 妙思</a></span></div><div class="hp-t">古色古香的中药房场景，白胡子老中医手持小秤站在药柜前，旁边站着一个穿粉色旗袍的小女孩仰头看他。老中医慈祥微笑，小女孩用童声说『爷爷你再说一遍』，随后老中医语重心长地说『颧骨长斑敷黄芪，鼻梁长斑敷白芷』。画面色调温暖怀旧，节奏舒缓但信息密集，用中医传承的仪式感制造专业信任钩子。</div></div></div></div><div class="top-card" data-card-md5="545ad4ec27d990c2ee7e1964398fd61c" data-card-search="545ad4ec27d990c2ee7e1964398fd61c    美妆护肤-面部洗护-眼部  达人开篇 开篇类型属于医生人设口播+明星背书型。开篇以『重度眼袋』文字痛点切入，紧接医生人设演员用『得罪人的秘密』悬念话术引出产品花柏禾眼袋贴。中段由资深医生形象讲解眼袋成因，强调『显老10岁』痛点。随后明星刘晓庆多次出镜进行信任背书，强调『第五次推" data-card-name="#4 美妆护肤-面部洗护-眼部"><div class="cover"><img src="assets/d1e9825096479995.jpg" alt="cover"><a class="top-video-link" href="http://adsmind.gdtimg.com/ads_svp_video__0b53xuaccaaafiape4mghfvbvpieeg6qaika.f0.mp4?dis_k=c29d68dc34ae9c969ad4ab4b7b853fb6&amp;dis_t=1787221413&amp;m=545ad4ec27d990c2ee7e1964398fd61c&amp;sha256=8d4788c47ede0e8eb5c1dfaa480f7eeb110350a94f8a37b6cb069f4d824610b6" target="_blank" rel="noopener">🔗 原视频</a></div><div class="info"><div class="head"><span class="rank">#4</span><span class="meta-pill">🧴 美妆护肤-面部洗护-眼部</span><span class="meta-pill" style="color:#fbbf24;border-color:rgba(251,191,36,.4)">🎬 达人开篇</span></div><div class="metrics-row">消耗 <b>2.8万</b> · 增长量 <b>—</b> · CTR <b>5.72%</b> · CVR <b>0.54%</b> · 3s完播 <b>—</b> · 播放时长 <b>—</b></div><div class="md5-actions"><span class="md5-action md5-label">🆔 MD5 · 545ad4ec27d990c2ee7e1964398fd61c</span></div><div class="desc">开篇类型属于医生人设口播+明星背书型。开篇以『重度眼袋』文字痛点切入，紧接医生人设演员用『得罪人的秘密』悬念话术引出产品花柏禾眼袋贴。中段由资深医生形象讲解眼袋成因，强调『显老10岁』痛点。随后明星刘晓庆多次出镜进行信任背书，强调『第五次推荐』和产品对脂肪型、水肿型、泪沟型眼袋的功效。穿插街头采访素人证言『又便宜又好用』『200块没用到』增强可信度。结尾以周年庆全场一折、拍一发多的促销福利引导下单转化。</div><div class="frames"><div class="frame"><img src="assets/b757d3877db848a5.jpg" alt="frame1"><div class="fcap"><div class="fname">痛点+悬念开场</div><div class="ftime">0-3s</div></div></div><div class="frame"><img src="assets/32e124e903914814.jpg" alt="frame2"><div class="fcap"><div class="fname">产品亮相</div><div class="ftime">3-12s</div></div></div><div class="frame"><img src="assets/d5a04c266a10d306.jpg" alt="frame3"><div class="fcap"><div class="fname">专家背书</div><div class="ftime">15-20s</div></div></div><div class="frame"><img src="assets/f09449b0811bc186.jpg" alt="frame4"><div class="fcap"><div class="fname">明星背书</div><div class="ftime">27-34s</div></div></div><div class="frame"><img src="assets/16406455fdcd7795.jpg" alt="frame5"><div class="fcap"><div class="fname">限时促销</div><div class="ftime">35-48s</div></div></div></div><div class="hp"><div class="hp-h">⚡ 黄金 3s Prompt<span class="hp-actions"><button class="hp-btn" data-hook-copy="开场绿色背景大字『重度眼袋』占据画面中央，停留0.8秒制造痛点共鸣。快速切换到医院场景，女医护人员侧身举手阻拦，表情严肃说『你再说一遍』，制造悬念冲突。男医生拉下口罩靠近镜头，神秘语气说『最后一次啊，告诉大家一个得罪人的秘密』。节奏紧凑，用痛点文字+医护冲突+悬念话术三重钩子在3秒内抓住用户停留。">📋 复制</button><a class="hp-btn" href="https://admuse.qq.com/#/index" target="_blank" rel="noopener">🚀 妙思</a></span></div><div class="hp-t">开场绿色背景大字『重度眼袋』占据画面中央，停留0.8秒制造痛点共鸣。快速切换到医院场景，女医护人员侧身举手阻拦，表情严肃说『你再说一遍』，制造悬念冲突。男医生拉下口罩靠近镜头，神秘语气说『最后一次啊，告诉大家一个得罪人的秘密』。节奏紧凑，用痛点文字+医护冲突+悬念话术三重钩子在3秒内抓住用户停留。</div></div></div></div><div class="top-card" data-card-md5="73d371f99d107e701b75675e1eb6fca7" data-card-search="73d371f99d107e701b75675e1eb6fca7    美妆护肤-面部洗护-眼部  达人开篇 开篇类型属于素人证言+达人口播型。开篇通过退休夫妇『老伴不是女儿』的年龄反差话术制造悬念，男士现场展示眼膜贴敷效果。接着研发人阳阳出镜，针对倒三角眼、眼袋等眼部问题进行专业讲解，强调黄芪纯原料成分和紧致抗皱功效，并演示正确使用方法。重点展示" data-card-name="#5 美妆护肤-面部洗护-眼部"><div class="cover"><img src="assets/37f57851c5447713.jpg" alt="cover"><a class="top-video-link" href="http://adsmind.gdtimg.com/ads_svp_video__0b53keaayaaayuahpujhy5vbwuiebriqadca.f0.mp4?dis_k=020ba5c51de7704d434dceed2f3a0441&amp;dis_t=1782959687&amp;m=73d371f99d107e701b75675e1eb6fca7&amp;sha256=ae94aafcf44bcd1127cf2d6ffb81127a656a4011d7552e5534ef0863d2da1dc6" target="_blank" rel="noopener">🔗 原视频</a></div><div class="info"><div class="head"><span class="rank">#5</span><span class="meta-pill">🧴 美妆护肤-面部洗护-眼部</span><span class="meta-pill" style="color:#fbbf24;border-color:rgba(251,191,36,.4)">🎬 达人开篇</span></div><div class="metrics-row">消耗 <b>2.2万</b> · 增长量 <b>—</b> · CTR <b>2.89%</b> · CVR <b>7.77%</b> · 3s完播 <b>—</b> · 播放时长 <b>—</b></div><div class="md5-actions"><span class="md5-action md5-label">🆔 MD5 · 73d371f99d107e701b75675e1eb6fca7</span></div><div class="desc">开篇类型属于素人证言+达人口播型。开篇通过退休夫妇『老伴不是女儿』的年龄反差话术制造悬念，男士现场展示眼膜贴敷效果。接着研发人阳阳出镜，针对倒三角眼、眼袋等眼部问题进行专业讲解，强调黄芪纯原料成分和紧致抗皱功效，并演示正确使用方法。重点展示全场一折的限时福利，通过AI颁奖画面增加品牌荣誉感，阳阳反复强调价格一降再降、一年一次的囤货机会。结尾快速剪辑街头采访，多位素人分享真实使用感受，用口碑证言强化产品可信度。</div><div class="frames"><div class="frame"><img src="assets/9ffc057888756bb1.jpg" alt="frame1"><div class="fcap"><div class="fname">开篇悬念</div><div class="ftime">0-5s</div></div></div><div class="frame"><img src="assets/19f517d7a65665e3.jpg" alt="frame2"><div class="fcap"><div class="fname">产品亮相</div><div class="ftime">5-10s</div></div></div><div class="frame"><img src="assets/a6af3ffe3694be86.jpg" alt="frame3"><div class="fcap"><div class="fname">痛点引入</div><div class="ftime">10-20s</div></div></div><div class="frame"><img src="assets/7685753c26d1d270.jpg" alt="frame4"><div class="fcap"><div class="fname">产品演示</div><div class="ftime">20-30s</div></div></div><div class="frame"><img src="assets/a4e8a9dbf710064a.jpg" alt="frame5"><div class="fcap"><div class="fname">限时促销</div><div class="ftime">30-45s</div></div></div></div><div class="hp"><div class="hp-h">⚡ 黄金 3s Prompt<span class="hp-actions"><button class="hp-btn" data-hook-copy="中景镜头拍摄一对看起来年龄差很大的中年夫妇，男士眼部贴着金色眼膜，怀里抱着婴儿，女士依偎在旁边面带微笑。男士看向镜头说『旁边这位是我老伴，不是我女儿』，语气轻松带点得意。画面顶部大字『效果好不好 坚持用了才知道』。整体节奏先给悬念再揭秘，用年龄反差制造『怎么可能』的好奇心，吸引中老年女性停留。">📋 复制</button><a class="hp-btn" href="https://admuse.qq.com/#/index" target="_blank" rel="noopener">🚀 妙思</a></span></div><div class="hp-t">中景镜头拍摄一对看起来年龄差很大的中年夫妇，男士眼部贴着金色眼膜，怀里抱着婴儿，女士依偎在旁边面带微笑。男士看向镜头说『旁边这位是我老伴，不是我女儿』，语气轻松带点得意。画面顶部大字『效果好不好 坚持用了才知道』。整体节奏先给悬念再揭秘，用年龄反差制造『怎么可能』的好奇心，吸引中老年女性停留。</div></div></div></div>
+  </section>
+</div>
+
+<div class="footer">素材解析台 · 达人开篇（开篇类型） · 20260903 · 内部版（含金额）</div>
+<div id="_tip"></div>
+<script>
+// 复制按钮事件代理
+(function(){
+  var themeBtn=document.getElementById("themeToggle"),saved="";
+  try{saved=localStorage.getItem("stmc-report-theme")||"";}catch(_){}
+  if(saved==="light")document.documentElement.dataset.theme="light";
+  function syncTheme(){if(themeBtn)themeBtn.textContent=document.documentElement.dataset.theme==="light"?"☾ 整体深色":"☀ 整体亮色";}
+  if(themeBtn)themeBtn.onclick=function(){var light=document.documentElement.dataset.theme!=="light";document.documentElement.dataset.theme=light?"light":"dark";try{localStorage.setItem("stmc-report-theme",light?"light":"dark");}catch(_){}syncTheme();};
+  syncTheme();
+  var md5Form=document.getElementById("detailMd5Form"),md5Input=document.getElementById("detailMd5Input");
+  if(md5Form)md5Form.onsubmit=function(e){
+    e.preventDefault();
+    var q=(md5Input.value||"").trim().toLowerCase();
+    var cards=Array.prototype.slice.call(document.querySelectorAll(".top-card[data-card-md5]"));
+    cards.forEach(function(card){card.hidden=false;card.classList.remove("md5-hit");});
+    if(!q)return;
+    var hits=cards.filter(function(card){return (card.getAttribute("data-card-md5")||"").toLowerCase().indexOf(q)!==-1;});
+    if(!hits.length){
+      var tip=document.getElementById("_tip");tip.textContent="本类型 10 条代表素材中未找到该 MD5";
+      tip.className="ok";tip.style.display="block";clearTimeout(window._tipT);
+      window._tipT=setTimeout(function(){tip.style.display="none";},2200);return;
+    }
+    cards.forEach(function(card){card.hidden=hits.indexOf(card)===-1;});
+    hits[0].classList.add("md5-hit");hits[0].scrollIntoView({behavior:"smooth",block:"center"});
+  };
+  // 方法论区集中检索：md5 / 客户 / 品类 / 开篇类型 / 脚本关键词 → 同页直接跳到视频卡
+  var mForm=document.getElementById("methSearchForm"),mInput=document.getElementById("methSearchInput"),
+      mRes=document.getElementById("methSearchRes"),mReset=document.getElementById("methSearchReset");
+  function methClear(){
+    var cards=document.querySelectorAll(".top-card[data-card-md5]");
+    Array.prototype.forEach.call(cards,function(c){c.hidden=false;c.classList.remove("md5-hit");});
+    if(mRes)mRes.textContent="";
+  }
+  if(mForm)mForm.onsubmit=function(e){
+    e.preventDefault();
+    var q=(mInput.value||"").trim().toLowerCase();
+    var cards=Array.prototype.slice.call(document.querySelectorAll(".top-card[data-card-md5]"));
+    cards.forEach(function(c){c.hidden=false;c.classList.remove("md5-hit");});
+    if(!q){if(mRes)mRes.textContent="";return;}
+    var hits=cards.filter(function(c){
+      var blob=((c.getAttribute("data-card-search")||"")+" "+(c.getAttribute("data-card-md5")||"")).toLowerCase();
+      return blob.indexOf(q)!==-1;
+    });
+    if(!hits.length){
+      if(mRes)mRes.textContent="未找到匹配的代表素材（本页展示品牌/非品牌各 Top5）";
+      return;
+    }
+    cards.forEach(function(c){c.hidden=hits.indexOf(c)===-1;});
+    hits[0].classList.add("md5-hit");hits[0].scrollIntoView({behavior:"smooth",block:"center"});
+    if(mRes)mRes.textContent="命中 "+hits.length+" 条，已定位第 1 条："+(hits[0].getAttribute("data-card-name")||"");
+  };
+  if(mReset)mReset.onclick=function(){if(mInput)mInput.value="";methClear();};
+})();
+document.addEventListener("click", function(e){
+  var btn = e.target.closest("[data-hook-copy]");
+  if(!btn) return;
+  e.preventDefault();
+  var txt = btn.getAttribute("data-hook-copy") || "";
+  var ta = document.createElement("textarea");
+  ta.innerHTML = txt;
+  var decoded = ta.value;
+  function ok(){
+    var t = document.getElementById("_tip");
+    t.textContent = "✓ " + (btn.getAttribute("data-copy-toast") || "已复制黄金 3s prompt");
+    t.className = "ok"; t.style.display = "block";
+    clearTimeout(window._tipT);
+    window._tipT = setTimeout(function(){ t.style.display="none"; }, 1800);
+  }
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(decoded).then(ok);
+  } else {
+    var t2 = document.createElement("textarea");
+    t2.value = decoded; t2.style.position="fixed"; t2.style.opacity="0";
+    document.body.appendChild(t2); t2.select();
+    try { document.execCommand("copy"); ok(); } catch(_){}
+    document.body.removeChild(t2);
+  }
+});
+</script>
+</body></html>
