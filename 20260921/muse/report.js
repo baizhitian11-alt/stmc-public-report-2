@@ -52,10 +52,24 @@
       document.querySelectorAll('[data-card-md5]').forEach(el => {
         const md5 = el.dataset.cardMd5;
         el.querySelectorAll('[data-muse-attached]').forEach(node => node.remove());
-        el.querySelectorAll('.hook-prompt-block, .hp').forEach(old => {
-          const slot = document.createElement('div'); slot.dataset.museSearch = md5;
-          old.replaceWith(slot);
-        });
+        const prompts = el.querySelectorAll('.hook-prompt-block, .hp');
+        if (prompts.length) {
+          prompts.forEach(old => {
+            const slot = document.createElement('div'); slot.dataset.museSearch = md5;
+            old.replaceWith(slot);
+          });
+          return;
+        }
+        // The public build strips the prompt block, so a published Skill would
+        // otherwise lose its only mount point and show no button at all.
+        const item = map.get(md5);
+        if (!item || item.stage !== 'live') return;
+        let slot = el.querySelector('[data-muse-search]');
+        if (!slot) {
+          slot = document.createElement('div'); slot.dataset.museSearch = md5;
+          slot.dataset.museAttached = '1';
+          el.append(slot);
+        }
       });
       document.querySelectorAll('[data-muse-search]').forEach(slot => {
         const md5 = slot.dataset.museSearch || slot.closest('[data-card-md5]')?.dataset.cardMd5;
