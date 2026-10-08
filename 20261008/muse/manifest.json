@@ -1,0 +1,205 @@
+{
+  "period": "20261008",
+  "items": [
+    {
+      "md5": "49ef911b545a9f69f1ee03dd6c2586d9",
+      "title": "美妆痛点开场种草",
+      "stage": "failed",
+      "demo": "",
+      "search_name": "",
+      "search_id": "",
+      "source_mode": "platform_reverse",
+      "client_url": ""
+    },
+    {
+      "md5": "4f00c2193f3eb221cf9e153adb79e6cd",
+      "title": "精华油质地种草",
+      "stage": "live",
+      "demo": "4f00c2193f3eb221cf9e153adb79e6cd.mp4",
+      "search_name": "精华油质地种草",
+      "search_id": "41010",
+      "source_mode": "platform_reverse",
+      "client_url": ""
+    },
+    {
+      "md5": "e46d4b12587b8032b7e4416d601cd97a",
+      "title": "明星口播护肤种草",
+      "stage": "live",
+      "demo": "e46d4b12587b8032b7e4416d601cd97a.mp4",
+      "search_name": "明星口播护肤种草",
+      "search_id": "33010",
+      "source_mode": "platform_reverse",
+      "client_url": ""
+    },
+    {
+      "md5": "e5c7586d99b552f0496b573673e0dbc1",
+      "title": "专柜彩妆惊喜价种草",
+      "stage": "live",
+      "demo": "e5c7586d99b552f0496b573673e0dbc1.mp4",
+      "search_name": "专柜彩妆惊喜价种草",
+      "search_id": "42006",
+      "source_mode": "platform_reverse",
+      "client_url": ""
+    },
+    {
+      "md5": "81f12d6a6c7bf56c4bfec6dad9c16dfb",
+      "title": "面霜 · 创意开篇 · 81f12d",
+      "stage": "prepared",
+      "demo": "",
+      "search_name": "",
+      "search_id": "",
+      "source_mode": "platform_reverse",
+      "client_url": ""
+    },
+    {
+      "md5": "82917a48d002ef1c3e33e1b9838032e8",
+      "title": "面霜 · 创意开篇 · 82917a",
+      "stage": "prepared",
+      "demo": "",
+      "search_name": "",
+      "search_id": "",
+      "source_mode": "platform_reverse",
+      "client_url": ""
+    },
+    {
+      "md5": "3f219dcd0adae7e4b783ca0fd9e921be",
+      "title": "办公室抓包冲突开场",
+      "stage": "demo_generating",
+      "demo": "",
+      "search_name": "",
+      "search_id": "",
+      "source_mode": "platform_reverse",
+      "client_url": ""
+    },
+    {
+      "md5": "0b49c4c4d4d72315283445e866184f5f",
+      "title": "母女同框恳求口播",
+      "stage": "live",
+      "demo": "0b49c4c4d4d72315283445e866184f5f.mp4",
+      "search_name": "母女同框恳求口播",
+      "search_id": "36010",
+      "source_mode": "platform_reverse",
+      "client_url": ""
+    },
+    {
+      "md5": "777a48e39b501a965cee7c7461f93d9e",
+      "title": "夫妻卧室搞怪种草",
+      "stage": "live",
+      "demo": "777a48e39b501a965cee7c7461f93d9e.mp4",
+      "search_name": "夫妻卧室搞怪种草",
+      "search_id": "16029",
+      "source_mode": "platform_reverse",
+      "client_url": ""
+    },
+    {
+      "md5": "7830c51200b72f382b12630f79a7dd1d",
+      "title": "面霜 · 创意开篇 · 7830c5",
+      "stage": "prepared",
+      "demo": "",
+      "search_name": "",
+      "search_id": "",
+      "source_mode": "platform_reverse",
+      "client_url": ""
+    },
+    {
+      "md5": "c9d035a49d5540192617be2a2fde2da4",
+      "title": "亲友质疑开箱种草",
+      "stage": "live",
+      "demo": "c9d035a49d5540192617be2a2fde2da4.mp4",
+      "search_name": "亲友质疑开箱种草",
+      "search_id": "38015",
+      "source_mode": "platform_reverse",
+      "client_url": ""
+    },
+    {
+      "md5": "8ba460b29477e6f062d9bd8cf586b08d",
+      "title": "意外蹭到剧情种草",
+      "stage": "live",
+      "demo": "8ba460b29477e6f062d9bd8cf586b08d.mp4",
+      "search_name": "意外蹭到剧情种草",
+      "search_id": "38016",
+      "source_mode": "platform_reverse",
+      "client_url": ""
+    },
+    {
+      "md5": "1e41202ad06aeb8b60427d94ebe1ce55",
+      "title": "反差剧情洁面种草",
+      "stage": "demo_generating",
+      "demo": "",
+      "search_name": "",
+      "search_id": "",
+      "source_mode": "platform_reverse",
+      "client_url": ""
+    },
+    {
+      "md5": "e54ef0f99a4e46bbcd4c70f12c069ebc",
+      "title": "反差剧情洁面种草",
+      "stage": "live",
+      "demo": "e54ef0f99a4e46bbcd4c70f12c069ebc.mp4",
+      "search_name": "反差剧情洁面种草",
+      "search_id": "29008",
+      "source_mode": "platform_reverse",
+      "client_url": ""
+    },
+    {
+      "md5": "aac2f24ac96f0c616f33f55a75808a1e",
+      "title": "卧室亲密互动眼霜种草",
+      "stage": "draft",
+      "demo": "",
+      "search_name": "",
+      "search_id": "",
+      "source_mode": "platform_reverse",
+      "client_url": ""
+    },
+    {
+      "md5": "d624f92c85bcd12529a84038a1bd1a6a",
+      "title": "超市搭讪护肤种草",
+      "stage": "draft",
+      "demo": "",
+      "search_name": "",
+      "search_id": "",
+      "source_mode": "platform_reverse",
+      "client_url": ""
+    },
+    {
+      "md5": "4044864ff1edf88b84b7b6685c654bcc",
+      "title": "卧室反差护肤种草",
+      "stage": "draft",
+      "demo": "",
+      "search_name": "",
+      "search_id": "",
+      "source_mode": "platform_reverse",
+      "client_url": ""
+    },
+    {
+      "md5": "087f48271f7fe2dae04db83c15b46fb4",
+      "title": "足部护理痛点口播",
+      "stage": "demo_generating",
+      "demo": "",
+      "search_name": "",
+      "search_id": "",
+      "source_mode": "platform_reverse",
+      "client_url": ""
+    },
+    {
+      "md5": "1d7b55448ca4334756d707f9f28c6dc8",
+      "title": "其他 · 创意开篇 · 1d7b55",
+      "stage": "prepared",
+      "demo": "",
+      "search_name": "",
+      "search_id": "",
+      "source_mode": "platform_reverse",
+      "client_url": ""
+    },
+    {
+      "md5": "c46f3105f12e225563940d8b41920581",
+      "title": "精华 · 创意开篇 · c46f31",
+      "stage": "prepared",
+      "demo": "",
+      "search_name": "",
+      "search_id": "",
+      "source_mode": "platform_reverse",
+      "client_url": ""
+    }
+  ]
+}
