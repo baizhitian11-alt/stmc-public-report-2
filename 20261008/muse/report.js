@@ -63,7 +63,7 @@
         // The public build strips the prompt block, so a published Skill would
         // otherwise lose its only mount point and show no button at all.
         const item = map.get(md5);
-        if (!item || item.stage !== 'live') return;
+        if (!item || (item.stage !== 'live' && !globalThis.MuseSearch?.pending(item))) return;
         let slot = el.querySelector('[data-muse-search]');
         if (!slot) {
           slot = document.createElement('div'); slot.dataset.museSearch = md5;

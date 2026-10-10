@@ -15,11 +15,19 @@
     if(root.navigator?.clipboard?.writeText)return root.navigator.clipboard.writeText(text).then(()=>true,()=>false);
     return Promise.resolve(false);
   }
+  const PENDING=new Set(['prepared','draft','demo_generating','demo_ready']);
+  function pending(item){return !!item&&!marker(item)&&PENDING.has(item.stage);}
   function mount(host,item) {
     if(!host||host.dataset.museSearchReady==='1')return;
     const name=marker(item),doc=host.ownerDocument||root.document;
-    // Cards without a published Skill stay exactly as the report rendered them;
-    // a disabled placeholder on every card would drown out the ones that work.
+    // Only queued (high-eco) materials get a placeholder; every other card stays as rendered.
+    if(pending(item)){
+      host.dataset.museSearchReady='1';host.replaceChildren();
+      const wait=doc.createElement('button');wait.type='button';wait.className='hp-btn';wait.disabled=true;wait.textContent='去妙思做同款 · 制作中';
+      const note=doc.createElement('small');note.style.cssText='display:block;margin-top:6px;line-height:1.7;';
+      note.textContent='本条的妙思同款 Skill 正在制作，上线后这里会变成可用按钮。';
+      host.append(wait,note);return;
+    }
     if(!name){host.replaceChildren();host.dataset.museSearchReady='1';return;}
     host.dataset.museSearchReady='1';host.replaceChildren();
     const button=doc.createElement('a');button.className='hp-btn';button.textContent='去妙思做同款';
@@ -40,7 +48,7 @@
     idButton.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();onCopy(String(item.search_id),'编号');});
     host.append(button,idButton,status,detail);
   }
-  root.MuseSearch={PAGE,marker,copy,mount};
+  root.MuseSearch={PAGE,marker,pending,copy,mount};
   if(root.document?.currentScript?.hasAttribute('data-muse-app')) {
     let period=null,map=new Map(),loading=false,scheduled=false;
     function decorate(){
