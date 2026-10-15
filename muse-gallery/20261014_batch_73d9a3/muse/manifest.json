@@ -1,0 +1,105 @@
+{
+  "period": "20261014_batch_73d9a3",
+  "items": [
+    {
+      "md5": "86e46b5c7a5d2566afcf0c70ebdd9f3e",
+      "title": "反差剧情洁面种草",
+      "stage": "demo_generating",
+      "demo": "",
+      "search_name": "",
+      "search_id": "",
+      "source_mode": "platform_reverse",
+      "client_url": ""
+    },
+    {
+      "md5": "4044864ff1edf88b84b7b6685c654bcc",
+      "title": "卧室反差护肤种草",
+      "stage": "live",
+      "demo": "4044864ff1edf88b84b7b6685c654bcc.mp4",
+      "search_name": "卧室反差护肤种草",
+      "search_id": "45006",
+      "source_mode": "platform_reverse",
+      "client_url": ""
+    },
+    {
+      "md5": "7830c51200b72f382b12630f79a7dd1d",
+      "title": "霸总壁咚面霜种草",
+      "stage": "failed",
+      "demo": "",
+      "search_name": "",
+      "search_id": "",
+      "source_mode": "platform_reverse",
+      "client_url": ""
+    },
+    {
+      "md5": "d624f92c85bcd12529a84038a1bd1a6a",
+      "title": "超市拦人护肤种草",
+      "stage": "live",
+      "demo": "d624f92c85bcd12529a84038a1bd1a6a.mp4",
+      "search_name": "超市拦人护肤种草",
+      "search_id": "38018",
+      "source_mode": "platform_reverse",
+      "client_url": ""
+    },
+    {
+      "md5": "1e41202ad06aeb8b60427d94ebe1ce55",
+      "title": "反差剧情洁面种草",
+      "stage": "live",
+      "demo": "1e41202ad06aeb8b60427d94ebe1ce55.mp4",
+      "search_name": "反差剧情洁面种草",
+      "search_id": "25011",
+      "source_mode": "platform_reverse",
+      "client_url": ""
+    },
+    {
+      "md5": "b133a9acbfe011bfc434b422561de060",
+      "title": "学生祛痘痛点种草",
+      "stage": "live",
+      "demo": "b133a9acbfe011bfc434b422561de060.mp4",
+      "search_name": "学生祛痘痛点种草",
+      "search_id": "45007",
+      "source_mode": "platform_reverse",
+      "client_url": ""
+    },
+    {
+      "md5": "e21c199b08ccfaad7c987fb422936777",
+      "title": "暧昧拉扯短剧开场",
+      "stage": "live",
+      "demo": "e21c199b08ccfaad7c987fb422936777.mp4",
+      "search_name": "暧昧拉扯短剧开场",
+      "search_id": "41014",
+      "source_mode": "platform_reverse",
+      "client_url": ""
+    },
+    {
+      "md5": "c1ffe7c016ddb27f2d44ac77644e2b63",
+      "title": "户外人物转面霜种草",
+      "stage": "live",
+      "demo": "c1ffe7c016ddb27f2d44ac77644e2b63.mp4",
+      "search_name": "户外人物转面霜种草",
+      "search_id": "27013",
+      "source_mode": "platform_reverse",
+      "client_url": ""
+    },
+    {
+      "md5": "e54ef0f99a4e46bbcd4c70f12c069ebc",
+      "title": "反差剧情洁面种草",
+      "stage": "live",
+      "demo": "e54ef0f99a4e46bbcd4c70f12c069ebc.mp4",
+      "search_name": "反差剧情洁面种草",
+      "search_id": "44009",
+      "source_mode": "platform_reverse",
+      "client_url": ""
+    },
+    {
+      "md5": "93e9e3306738c8d6207c91def8cb2b04",
+      "title": "镜前反击护肤种草",
+      "stage": "live",
+      "demo": "93e9e3306738c8d6207c91def8cb2b04.mp4",
+      "search_name": "镜前反击护肤种草",
+      "search_id": "38019",
+      "source_mode": "platform_reverse",
+      "client_url": ""
+    }
+  ]
+}
