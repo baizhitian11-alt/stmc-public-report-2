@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN"><head>
+<html lang="zh-CN" data-theme="light"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=1200,initial-scale=1">
 <title>唇部彩妆 · 20261019 周报</title>
@@ -223,7 +223,7 @@
   <!-- ① 指标均值 -->
   <section class="section">
     <h2>📊 指标均值 <span class="count">· 清晰呈现本类素材基准指标，帮你快速定位差距，校准优化方向</span></h2>
-    <div class="metrics-grid"><div class="m-cell"><div class="lab">消耗(均值)</div><span class="val muted" title="对外版隐藏数值">—</span></div><div class="m-cell"><div class="lab">增长量(均值)</div><span class="val muted" title="对外版隐藏数值">—</span></div><div class="m-cell"><div class="lab">CTR (均值)</div><span class="val">1.45<span class="unit">%</span></span></div><div class="m-cell"><div class="lab">CVR (均值)</div><span class="val">12.09<span class="unit">%</span></span></div><div class="m-cell"><div class="lab">3s完播 (均值)</div><span class="val">52.5<span class="unit">%</span></span></div><div class="m-cell"><div class="lab">播放时长(均值)</div><span class="val">21.4<span class="unit">s</span></span></div></div>
+    <div class="metrics-grid"><div class="m-cell"><div class="lab">消耗(均值)</div><span class="val muted" title="对外版隐藏数值">—</span></div><div class="m-cell"><div class="lab">增长量(均值)</div><span class="val muted" title="对外版隐藏数值">—</span></div><div class="m-cell"><div class="lab">CTR (均值)</div><span class="val">1.42<span class="unit">%</span></span></div><div class="m-cell"><div class="lab">CVR (均值)</div><span class="val">11.94<span class="unit">%</span></span></div><div class="m-cell"><div class="lab">3s完播 (均值)</div><span class="val">48.0<span class="unit">%</span></span></div><div class="m-cell"><div class="lab">播放时长(均值)</div><span class="val">19.1<span class="unit">s</span></span></div></div>
   </section>
 
   <!-- ② 方法论（脚本框架 + 词云 + 模特画像 + 爆款话术 + 跑量关键点） -->
@@ -247,7 +247,7 @@
 (function(){
   var themeBtn=document.getElementById("themeToggle"),saved="";
   try{saved=localStorage.getItem("stmc-report-theme")||"";}catch(_){}
-  if(saved==="light")document.documentElement.dataset.theme="light";
+  document.documentElement.dataset.theme=saved==="dark"?"dark":"light";
   function syncTheme(){if(themeBtn)themeBtn.textContent=document.documentElement.dataset.theme==="light"?"☾ 整体深色":"☀ 整体亮色";}
   if(themeBtn)themeBtn.onclick=function(){var light=document.documentElement.dataset.theme!=="light";document.documentElement.dataset.theme=light?"light":"dark";try{localStorage.setItem("stmc-report-theme",light?"light":"dark");}catch(_){}syncTheme();};
   syncTheme();
