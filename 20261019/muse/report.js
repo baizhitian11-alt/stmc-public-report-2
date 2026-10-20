@@ -80,6 +80,8 @@
   }).then(data => {
     if (!Array.isArray(data.items) || !data.items.length) return;
     globalThis.__musePeriod = data.period;
+    const ecoButton = document.querySelector('#weeklyEcoSection a');
+    if (ecoButton) ecoButton.textContent = `本期高 eco 素材 · ${data.items.length} 条 · 查看 Demo 与 Skill`;
     const map = new Map(data.items.map(x => [x.md5, x]));
     if (gallery) {
       const count = document.querySelector('[data-muse-count]');
