@@ -78,7 +78,7 @@
   fetch(new URL('manifest.json', base), {cache:'no-store'}).then(r => {
     if (!r.ok) throw new Error('manifest unavailable'); return r.json();
   }).then(data => {
-    if (!Array.isArray(data.items) || !data.items.length) return;
+    if (!Array.isArray(data.items)) return;
     globalThis.__musePeriod = data.period;
     const ecoButton = document.querySelector('#weeklyEcoSection a');
     if (ecoButton) ecoButton.textContent = `本期高 eco 素材 · ${data.items.length} 条 · 查看 Demo 与 Skill`;
@@ -88,6 +88,13 @@
       const nodes = new Map();
       function update(next) {
         if (count) count.textContent = `${next.period} · ${next.items.length} 条素材 · ${next.items.filter(x=>x.demo).length} 条 Demo 可播放 · ${next.items.filter(x=>x.stage==='live').length} 条 Skill 已发布`;
+        const retained = new Set(next.items.map(item => item.md5));
+        for (const [md5, previous] of nodes) {
+          if (retained.has(md5)) continue;
+          previous.node.querySelector('video')?.pause();
+          previous.node.remove();
+          nodes.delete(md5);
+        }
         for (const item of next.items) {
           const signature = JSON.stringify(item), previous = nodes.get(item.md5);
           if (previous?.signature === signature) continue;
