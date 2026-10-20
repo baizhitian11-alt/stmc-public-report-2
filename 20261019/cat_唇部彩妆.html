@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1200,initial-scale=1">
+<title>唇部彩妆 · 20261019 周报</title>
+<style>
+  :root{--bg:#0a0d14;--panel:#101622;--panel2:#0d1320;--line:#1f2937;
+        --text:#e6edf3;--muted:#94a3b8;--primary:#fbbf24;--success:#86efac;--info:#9dbcff}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+       font:14px/1.6 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
+  a{color:var(--info);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .header{padding:24px 40px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+          background:linear-gradient(180deg,#0d1320,#0a0d14);border-bottom:1px solid var(--line)}
+  .header .nav{color:var(--muted);font-size:13px}
+  .header .nav a{color:var(--muted)}
+  .header h1{margin:0;font-size:22px;font-weight:700}
+  .header .badge{background:rgba(157,188,255,.14);color:var(--info);padding:4px 10px;
+                 border-radius:12px;font-size:12px;border:1px solid rgba(157,188,255,.3)}
+  .wrap{max-width:1280px;margin:0 auto;padding:24px 40px 60px}
+  .section{margin-top:32px}
+  .section h2{margin:0 0 16px;font-size:18px;font-weight:700;display:flex;align-items:center;gap:10px}
+  .section h2 .count{font-size:13px;color:var(--muted);font-weight:400}
+
+  /* ① 指标均值 */
+  .metrics-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;
+                background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px}
+  .m-cell{text-align:center}
+  .m-cell .lab{font-size:12px;color:var(--muted);margin-bottom:6px}
+  .m-cell .val{font-size:22px;font-weight:700;color:var(--text)}
+  .m-cell .val.muted{color:var(--muted);font-size:18px}
+  .m-cell .unit{font-size:12px;color:var(--muted);margin-left:2px}
+
+  /* ② 脚本框架 A-B-C-D-E */
+  .frame-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;
+               background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px}
+  .stage-card{background:#0a0e18;border:1px solid var(--line);border-radius:8px;padding:14px;position:relative}
+  .stage-card .stg-ix{position:absolute;top:10px;right:12px;font-size:11px;font-weight:700;color:var(--primary);
+                      background:rgba(251,191,36,.14);padding:2px 7px;border-radius:6px;border:1px solid rgba(251,191,36,.3)}
+  .stage-card .stg-name{font-size:14px;font-weight:600;color:#fff;margin:0 0 6px;padding-right:36px}
+  .stage-card .stg-purpose{font-size:12px;color:#cbd2e0;line-height:1.6;margin-bottom:6px}
+  .stage-card .stg-time{font-size:11px;color:var(--info);margin-bottom:6px}
+  .stage-card .stg-pattern{font-size:11px;color:var(--muted);line-height:1.6;border-top:1px dashed var(--line);padding-top:6px;margin-top:6px}
+  .frame-empty{padding:32px;text-align:center;color:var(--muted);font-size:13px;
+               background:var(--panel);border:1px dashed var(--line);border-radius:12px}
+
+  /* ②.b 方法论新模块（v2，2026-05-28 升级，对齐看板提示词）*/
+  .meth-block{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:14px}
+  .meth-block .mh{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:700;color:#fff;margin:0 0 12px}
+  .meth-block .mh .ic{font-size:16px}
+  .meth-block .mh .sub{font-size:12px;color:var(--muted);font-weight:400}
+  /* 双词云：左右两列 */
+  .wc-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .wc-col{background:#0a0e18;border:1px solid var(--line);border-radius:8px;padding:12px}
+  .wc-col h4{margin:0 0 10px;font-size:12px;color:var(--info);font-weight:600;display:flex;align-items:center;gap:6px}
+  .wc-col h4 .n{color:var(--muted);font-weight:400;font-size:11px}
+  .wc-words{display:flex;flex-wrap:wrap;gap:6px}
+  .wc-w{padding:4px 10px;border-radius:14px;background:#172033;border:1px solid var(--line);font-size:12px;color:#cbd2e0}
+  .wc-w.s1{font-size:15px;color:#fff;background:rgba(251,191,36,.16);border-color:rgba(251,191,36,.45)}
+  .wc-w.s2{font-size:13px;color:#fff;background:rgba(157,188,255,.14);border-color:rgba(157,188,255,.4)}
+  .wc-w.s3{font-size:12px;color:#cbd2e0}
+  .wc-w.s4{font-size:11px;color:var(--muted)}
+  /* persona 三列 */
+  .persona-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .persona-cell{background:#0a0e18;border:1px solid var(--line);border-radius:8px;padding:12px}
+  .persona-cell .pl{font-size:11px;color:var(--info);font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .persona-cell .pv{font-size:12px;color:#cbd2e0;line-height:1.7}
+  /* 开篇细分 */
+  .subt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+  .subt-cell{background:#0a0e18;border:1px solid var(--line);border-radius:8px;padding:12px}
+  .subt-cell .stn{font-size:13px;font-weight:700;color:#fff;margin:0 0 4px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .subt-cell .stn .rec{font-size:11px;color:var(--primary);font-weight:600}
+  .subt-cell .std{font-size:12px;color:#cbd2e0;line-height:1.6}
+  /* 爆款话术 */
+  .viral-list{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .viral-list li{background:#0a0e18;border:1px solid var(--line);border-left:3px solid var(--primary);border-radius:6px;padding:10px 12px;font-size:12px;color:#cbd2e0;line-height:1.7}
+  /* 跑量关键点 */
+  .runk-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+  .runk-list li{background:#0a0e18;border:1px solid var(--line);border-radius:6px;padding:10px 12px;font-size:12px;color:#cbd2e0;line-height:1.7}
+  @media (max-width:760px){
+    .wc-grid,.persona-grid{grid-template-columns:1fr}
+    .viral-list{grid-template-columns:1fr}
+  }
+
+  /* ③ Top5 紧凑卡片：左封面 + 右关键帧并列 */
+  .top-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:14px;
+            display:grid;grid-template-columns:200px 1fr;gap:18px}
+  .top-card .cover{display:flex;flex-direction:column;gap:8px}
+  .top-card .cover img{width:100%;aspect-ratio:9/16;object-fit:cover;display:block;background:#000;border-radius:8px;overflow:hidden;border:1px solid var(--line)}
+  .top-card .cover .placeholder{display:flex;align-items:center;justify-content:center;aspect-ratio:9/16;background:#000;border-radius:8px;border:1px solid var(--line);color:#475569;font-size:12px}
+  .top-card .cover .top-video-link{display:block;text-align:center;font-size:12px;padding:6px 8px;border-radius:6px;
+                                    color:var(--info);background:rgba(157,188,255,.1);border:1px solid rgba(157,188,255,.35)}
+  .top-card .cover .top-video-link:hover{background:rgba(157,188,255,.2)}
+  .top-card .info{display:flex;flex-direction:column;gap:10px;min-width:0}
+  .top-card .head{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .top-card .head .rank{background:rgba(251,191,36,.14);color:var(--primary);padding:3px 10px;border-radius:6px;font-weight:700;font-size:13px;border:1px solid rgba(251,191,36,.3)}
+  .top-card .head .meta-pill{font-size:11px;color:#cbd2e0;background:#172033;padding:2px 8px;border-radius:4px;border:1px solid var(--line)}
+  .top-card .metrics-row{display:flex;flex-wrap:wrap;gap:8px;font-size:11px;color:var(--muted)}
+
+  /* 转化人群年龄饼图（默认折叠，点击展开） */
+  .age-pie{margin-top:6px;background:var(--panel2);border:1px solid var(--line);
+    border-radius:6px;padding:5px 9px}
+  .age-pie summary{cursor:pointer;font-size:11px;color:var(--info);outline:none;
+    user-select:none;list-style:none}
+  .age-pie summary::-webkit-details-marker{display:none}
+  .age-pie summary::before{content:"▸ ";color:var(--muted)}
+  .age-pie[open] summary::before{content:"▾ "}
+  .age-sum-tag{background:rgba(79,140,255,.16);border:1px solid rgba(79,140,255,.38);
+    border-radius:3px;padding:1px 5px;font-size:10px}
+  .age-body{display:flex;gap:12px;align-items:flex-start;margin-top:8px;flex-wrap:wrap}
+  .age-right{flex:1 1 170px;min-width:160px}
+  .age-bks{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:6px}
+  .age-bk{font-size:10px;color:var(--muted);background:rgba(148,163,184,.12);
+    border:1px solid rgba(148,163,184,.28);border-radius:4px;padding:1px 6px}
+  .age-bk.on{background:rgba(79,140,255,.2);border-color:rgba(79,140,255,.5);
+    color:var(--info);font-weight:600}
+  .age-legend{display:flex;gap:3px 10px;flex-wrap:wrap}
+  .age-lg{font-size:10px;color:var(--fg);display:inline-flex;align-items:center;
+    gap:3px;white-space:nowrap;opacity:.85}
+  .age-lg i{width:7px;height:7px;border-radius:2px;display:inline-block;flex:0 0 auto}
+  .age-svg path,.age-svg circle{stroke:var(--panel2)}
+  .top-card .metrics-row b{color:var(--text)}
+  .top-card .desc{font-size:12px;color:#cbd2e0;line-height:1.7;
+                  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .top-card .frames{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+  .top-card .frame{background:#0a0e18;border:1px solid var(--line);border-radius:6px;overflow:hidden;aspect-ratio:9/16;position:relative}
+  .top-card .frame img{width:100%;height:100%;object-fit:cover;display:block}
+  .top-card .frame .fcap{position:absolute;left:0;right:0;bottom:0;padding:3px 6px;background:linear-gradient(transparent,rgba(0,0,0,.85));font-size:10px;color:#fff;line-height:1.3}
+  .top-card .frame .fname{font-weight:600}
+  .top-card .frame .ftime{color:#9dbcff;font-size:9px}
+  .top-card .frame.no-img{display:flex;align-items:center;justify-content:center;color:#475569;font-size:11px;text-align:center;padding:8px}
+
+  /* 黄金 3s prompt */
+  .hp{background:#0a0e18;border-left:3px solid var(--info);border-radius:0 6px 6px 0;padding:10px 12px;margin-top:8px}
+  .hp .hp-h{font-size:12px;font-weight:600;color:var(--info);margin-bottom:4px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .hp .hp-actions{margin-left:auto;display:inline-flex;gap:6px}
+  .hp .hp-btn{display:inline-flex;align-items:center;gap:4px;padding:2px 9px;font-size:10px;color:#cbd2e0;background:#172033;border:1px solid var(--line);border-radius:4px;cursor:pointer;text-decoration:none;font-family:inherit}
+  .hp .hp-btn:hover{background:#1e293b;color:#fff}
+  .hp .hp-t{font-size:12px;color:#cbd2e0;line-height:1.7;white-space:pre-wrap;word-break:break-word}
+  .md5-actions{display:flex;gap:7px;flex-wrap:wrap}
+  .md5-action{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);border-radius:6px;
+              padding:5px 9px;background:#172033;color:var(--info);font:11px ui-monospace,Menlo,monospace;
+              text-decoration:none;cursor:pointer}
+  .md5-action:hover{border-color:var(--info);background:#1e293b;color:#fff}
+  .detail-md5-tool{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 24px;padding:14px 16px;
+                   background:var(--panel);border:1px solid var(--line);border-radius:10px}
+  .detail-md5-tool .tool-label{font-size:12px;font-weight:700;color:var(--text);white-space:nowrap}
+  .detail-md5-tool form{display:flex;gap:8px;flex:1;min-width:420px}
+  .detail-md5-tool input{flex:1;min-width:260px;border:1px solid var(--line);border-radius:7px;padding:9px 12px;
+                         background:var(--panel2);color:var(--text);font:12px ui-monospace,Menlo,monospace;outline:none}
+  .detail-md5-tool input:focus{border-color:var(--info);box-shadow:0 0 0 2px rgba(157,188,255,.14)}
+  .detail-md5-list{display:flex;gap:6px;flex-wrap:wrap}
+  .meth-search{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 16px;padding:12px 15px;
+               background:linear-gradient(180deg,rgba(79,140,255,.08),var(--panel));
+               border:1px solid var(--line);border-radius:10px}
+  .meth-search .tool-label{font-size:12px;font-weight:700;color:var(--text)}
+  .meth-search form{display:flex;gap:8px;flex:1;min-width:420px}
+  .meth-search input{flex:1;min-width:240px;border:1px solid var(--line);border-radius:7px;padding:9px 12px;
+                     background:var(--panel2);color:var(--text);font:12px system-ui,sans-serif;outline:none}
+  .meth-search input:focus{border-color:var(--info);box-shadow:0 0 0 2px rgba(157,188,255,.14)}
+  .meth-search-res{flex-basis:100%;font-size:12px;color:var(--info)}
+  .highlight-method-summary{font-size:13px;color:var(--text);line-height:1.8;margin-bottom:10px}
+  .highlight-method-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+  .highlight-method-chip{padding:4px 9px;border-radius:999px;background:var(--panel2);border:1px solid var(--line);
+                         color:var(--text);font-size:11px}
+  .highlight-method-samples{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px}
+  .highlight-method-sample{padding:9px 11px;border-radius:7px;background:var(--panel2);border:1px solid var(--line);
+                           color:var(--text);font-size:11px;line-height:1.65}
+  .highlight-method-sample code{color:var(--info);font-family:ui-monospace,Menlo,monospace}
+  .highlight-content-title{margin:14px 0 8px;font-size:12px;font-weight:700;color:var(--text)}
+  .highlight-content-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px}
+  .highlight-content-card{padding:10px 11px;border:1px solid var(--line);border-radius:8px;background:var(--panel2)}
+  .highlight-content-card .name{font-size:12px;font-weight:700;color:var(--text);margin-bottom:5px}
+  .highlight-content-card .stats{font-size:11px;color:var(--muted);line-height:1.65}
+  .highlight-content-card .example{margin-top:6px;font-size:11px;color:var(--text);line-height:1.55}
+  .highlight-findings{margin:9px 0 0;padding-left:20px;color:var(--text);font-size:12px;line-height:1.8}
+  .top-card[hidden]{display:none!important}
+  .top-card.md5-hit{border-color:var(--primary);box-shadow:0 0 0 3px rgba(251,191,36,.22),0 12px 30px rgba(0,0,0,.18)}
+  .md5-label{cursor:default;user-select:all;word-break:break-all}
+
+  html[data-theme="light"]{--bg:#f7f3ea;--panel:#fffdf8;--panel2:#f1eadf;--line:#d9d0c2;--text:#292822;
+                            --muted:#716c62;--primary:#9a5f44;--info:#66734d;--success:#66734d;--danger:#b45f52}
+  html[data-theme="light"] body{background:var(--bg);color:var(--text)}
+  html[data-theme="light"] .header{background:rgba(247,243,234,.96);box-shadow:0 1px 0 rgba(84,70,56,.08)}
+  html[data-theme="light"] .section h2,html[data-theme="light"] .sub h3,html[data-theme="light"] .panel h3,
+  html[data-theme="light"] .frame-section h3,html[data-theme="light"] .stage-card .stg-name,
+  html[data-theme="light"] .meth-block .mh,html[data-theme="light"] .subt-cell .stn{color:var(--text)}
+  html[data-theme="light"] .stage-card .stg-purpose,html[data-theme="light"] .persona-cell .pv,
+  html[data-theme="light"] .subt-cell .std,html[data-theme="light"] .viral-list li,
+  html[data-theme="light"] .runk-list li,html[data-theme="light"] .top-card .desc,
+  html[data-theme="light"] .hp .hp-t,html[data-theme="light"] .hp .hp-btn,
+  html[data-theme="light"] .top-card .head .meta-pill{color:#58534b}
+  html[data-theme="light"] .stage-card,html[data-theme="light"] .wc-col,html[data-theme="light"] .persona-cell,
+  html[data-theme="light"] .subt-cell,html[data-theme="light"] .viral-list li,html[data-theme="light"] .runk-list li,
+  html[data-theme="light"] .top-card .frame,html[data-theme="light"] .hp{background:var(--panel2)}
+  html[data-theme="light"] .stage-card .stg-purpose,html[data-theme="light"] .stage-card .stg-pattern,
+  html[data-theme="light"] .meth-block .mh .sub,html[data-theme="light"] .section h2 .count{color:#625c53}
+  html[data-theme="light"] .top5-group-label{color:var(--info)!important}
+  html[data-theme="light"] .wc-w,html[data-theme="light"] .hp .hp-btn,
+  html[data-theme="light"] .top-card .head .meta-pill,html[data-theme="light"] .md5-action{background:#eee6da;color:#58534b}
+  html[data-theme="light"] .wc-w.s1,html[data-theme="light"] .wc-w.s2{color:var(--text)}
+  html[data-theme="light"] .top-card .cover img,html[data-theme="light"] .top-card .cover .placeholder{background:#e8dfd2}
+  html[data-theme="light"] .md5-action:hover{background:#e5dacb;color:var(--text)}
+
+  .footer{text-align:center;color:var(--muted);font-size:12px;padding:32px;border-top:1px solid var(--line);margin-top:48px}
+  #_tip{position:fixed;left:50%;top:24px;transform:translateX(-50%);padding:8px 16px;border-radius:8px;font-size:12px;color:#fff;z-index:1000;display:none;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+  #_tip.ok{background:#15803d}
+</style>
+</head>
+<body>
+<div class="header">
+  <span class="nav"><a href="index.html">← 返回首页</a></span>
+  <span class="nav">·</span>
+  <span class="nav"><a href="full.html">完整报告</a></span>
+  <h1 style="margin-left:12px">🧴 唇部彩妆</h1>
+  <span class="badge">2 条素材</span>
+  <button class="md5-action" id="themeToggle" type="button" style="margin-left:auto;font-family:inherit">☀ 整体亮色</button>
+</div>
+
+<div class="wrap">
+  <section class="detail-md5-tool"><span class="tool-label">本类代表素材 MD5（点击复制）</span><div class="detail-md5-list"><button class="md5-action" data-hook-copy="d93eb3d5b8c1751dd430ea016fc60f67" data-copy-toast="已复制 MD5">📋 d93eb3d5b8c1751dd430ea016fc60f67</button><button class="md5-action" data-hook-copy="30668ea14379086a75272b2d0ddeb14e" data-copy-toast="已复制 MD5">📋 30668ea14379086a75272b2d0ddeb14e</button></div></section>
+  <!-- ① 指标均值 -->
+  <section class="section">
+    <h2>📊 指标均值 <span class="count">· 清晰呈现本类素材基准指标，帮你快速定位差距，校准优化方向</span></h2>
+    <div class="metrics-grid"><div class="m-cell"><div class="lab">消耗(均值)</div><span class="val muted" title="对外版隐藏数值">—</span></div><div class="m-cell"><div class="lab">增长量(均值)</div><span class="val muted" title="对外版隐藏数值">—</span></div><div class="m-cell"><div class="lab">CTR (均值)</div><span class="val">1.45<span class="unit">%</span></span></div><div class="m-cell"><div class="lab">CVR (均值)</div><span class="val">12.09<span class="unit">%</span></span></div><div class="m-cell"><div class="lab">3s完播 (均值)</div><span class="val">52.5<span class="unit">%</span></span></div><div class="m-cell"><div class="lab">播放时长(均值)</div><span class="val">21.4<span class="unit">s</span></span></div></div>
+  </section>
+
+  <!-- ② 方法论（脚本框架 + 词云 + 模特画像 + 爆款话术 + 跑量关键点） -->
+  <section class="section">
+    <h2>📚 方法论沉淀 <span class="count">· 拆解开篇类型核心打法，吃透爆款底层逻辑，轻松拿捏创作节奏</span></h2>
+    
+    <section class="meth-block"><h3 class="mh"><span class="ic">🎬</span>开篇方式细分<span class="sub">· 还原头部素材的爆款开篇套路，直接参考高起量创作范式（推荐指数=消耗量级）</span></h3><div class="subt-grid"><div class="subt-cell"><div class="stn"><span>达人种草类</span><span class="rec">⭐⭐⭐⭐⭐</span></div><div class="std">博主/达人以唇部特写或涂抹展示开场，配合话题钩子文案如『体制内都在涂』『口红颜色决定第一印象』快速建立信任感和好奇心，适合唇部彩妆品类的视觉化展示特性，消耗量级高，两条素材均采用此类开篇</div></div><div class="subt-cell"><div class="stn"><span>明星背书类</span><span class="rec">⭐⭐⭐⭐</span></div><div class="std">在达人种草后切入明星代言人画面，借助明星效应快速提升品牌信任度和产品档次感，适合有明星资源的品牌作为信任背书补充，消耗表现优秀</div></div><div class="subt-cell"><div class="stn"><span>痛点开篇类</span><span class="rec">⭐⭐⭐⭐</span></div><div class="std">以『高级色vs廉价色』『第一印象』等概念抛出用户痛点，暗示不选对口红会显廉价没气质，激发用户焦虑心理促进转化，适合主打气质提升类唇妆产品</div></div><div class="subt-cell"><div class="stn"><span>营销福利</span><span class="rec">⭐⭐⭐</span></div><div class="std">结尾切入直播间场景，喊出『买的越多送的越多』等促销机制，适合作为收尾转化引导而非开篇，单独作为开篇消耗一般</div></div></div></section><section class="meth-block" style="padding:14px 18px"><h3 class="mh"><span class="ic">📋</span>脚本框架<span class="sub">· 标准化脚本流程拆解，素材组合直接照着用，降低创作试错成本（6 段）</span></h3><div style="margin:0 -4px"><div class="frame-strip"><div class="stage-card"><span class="stg-ix">A</span><div class="stg-name">【达人种草开篇】</div><div class="stg-time">⏱ 0-5s</div><div class="stg-purpose">快速抓取注意力，建立信任感</div><div class="stg-pattern">📌 唇部特写+话题钩子文案，如『体制内流行色』『口红决定第一印象』</div></div><div class="stage-card"><span class="stg-ix">B</span><div class="stg-name">【用户痛点+明星背书】</div><div class="stg-time">⏱ 5-15s</div><div class="stg-purpose">制造焦虑感并提升品牌信任度</div><div class="stg-pattern">📌 抛出『高级色』概念暗示廉价感痛点，穿插明星代言人画面增强背书</div></div><div class="stage-card"><span class="stg-ix">C</span><div class="stg-name">【产品成分卖点演示】</div><div class="stg-time">⏱ 15-40s</div><div class="stg-purpose">核心卖点可视化呈现</div><div class="stg-pattern">📌 雾面哑光质地、上嘴丝滑、30秒成膜等卖点实操演示</div></div><div class="stage-card"><span class="stg-ix">D</span><div class="stg-name">【效果对比】</div><div class="stg-time">⏱ 40-55s</div><div class="stg-purpose">强化产品效果说服力</div><div class="stg-pattern">📌 薄涂厚涂对比、喷水防水测试、纸巾擦拭不掉色实验</div></div><div class="stage-card"><span class="stg-ix">E</span><div class="stg-name">【功效成分背书+百搭种草】</div><div class="stg-time">⏱ 55-65s</div><div class="stg-purpose">深化产品价值认知</div><div class="stg-pattern">📌 一笔遮唇纹、滋润不拔干、精油灌肤体验、百搭各种穿搭风格</div></div><div class="stage-card"><span class="stg-ix">F</span><div class="stg-name">【价格福利+转化引导】</div><div class="stg-time">⏱ 65-75s</div><div class="stg-purpose">促进下单转化</div><div class="stg-pattern">📌 直播间场景、买多送多机制、限时优惠引导下单</div></div></div></div></section><section class="meth-block"><h3 class="mh"><span class="ic">☁️</span>核心词云<span class="sub">· 提炼高频重点标签，靠前标签即高机会，快速抓准流量密码（卖点 / 用户痛点）</span></h3><div class="wc-grid" style="grid-template-columns:1fr 1fr"><div class="wc-col"><h4>✨ 卖点 <span class="n">· 16 词</span></h4><div class="wc-words"><span class="wc-w s1">30秒快速成膜</span><span class="wc-w s1">只掉油膜不掉底色</span><span class="wc-w s1">持久不沾杯</span><span class="wc-w s2">一笔遮唇纹</span><span class="wc-w s2">薄涂厚涂两用</span><span class="wc-w s2">滋润不拔干</span><span class="wc-w s2">高级雾面质地</span><span class="wc-w s2">上嘴丝滑</span><span class="wc-w s3">防水不掉色</span><span class="wc-w s3">气质奶咖色系</span><span class="wc-w s3">双头唇线设计</span><span class="wc-w s3">百搭显气质</span><span class="wc-w s3">热卖爆款色号</span><span class="wc-w s3">明星同款</span><span class="wc-w s3">精油灌肤体验</span><span class="wc-w s3">清透妈生唇</span></div></div><div class="wc-col"><h4>😣 用户痛点 <span class="n">· 14 词</span></h4><div class="wc-words"><span class="wc-w s1">唇纹深</span><span class="wc-w s1">唇色暗沉</span><span class="wc-w s1">没气色</span><span class="wc-w s2">口红沾杯</span><span class="wc-w s2">掉色脱妆</span><span class="wc-w s2">显廉价</span><span class="wc-w s2">拔干起皮</span><span class="wc-w s2">颜色不高级</span><span class="wc-w s3">不百搭</span><span class="wc-w s3">第一印象差</span><span class="wc-w s3">妆容不持久</span><span class="wc-w s3">上色不均匀</span><span class="wc-w s3">显唇纹</span><span class="wc-w s3">涂不匀</span></div></div></div></section><section class="meth-block"><h3 class="mh"><span class="ic">🪞</span>模特 / 对比 / 场景 三段画像</h3><div class="persona-grid"><div class="persona-cell"><div class="pl">👤 模特画像</div><div class="pv">选择28+气质女性为主，贵气感妆容，可搭配珠宝首饰，眼妆深邃有神，日常素唇状态呈现唇色暗沉没气色的对比感</div></div><div class="persona-cell"><div class="pl">🔁 效果对比方式</div><div class="pv">先展示沾杯掉色、唇纹明显的口红痛点，再切换到xx上嘴丝滑显色、喷水擦拭不掉色的效果，可增加『咚』等音效强化冲击</div></div><div class="persona-cell"><div class="pl">🎬 场景搭建</div><div class="pv">日常通勤出门、闺蜜姐妹聚会、约会场景，搭配休闲装、皮草、皮夹克等多种穿搭风格展示百搭属性</div></div></div></section><section class="meth-block"><h3 class="mh"><span class="ic">💬</span>常见爆款话术<span class="sub">· 整理高转化爆款话术，直接复用提升素材起量率与吸引力（≥2 条素材出现，产品名已隐藏）</span></h3><ul class="viral-list"><li>口红颜色决定第一印象，如何让嘴唇看上去更高级</li><li>体制内都在涂的白开水裸棕色，非常适合秋天</li><li>30秒快速成膜，只掉油膜不掉底色</li><li>一笔遮盖唇纹，打造清透妈生唇</li><li>薄涂日常通勤，厚涂气场全开</li><li>喝水不沾杯，纸巾擦拭不掉色</li><li>又高级又百搭，休闲皮草都能驾驭</li><li>买xx买的越多送的越多</li></ul></section><section class="meth-block"><h3 class="mh"><span class="ic">🚀</span>跑量关键点<span class="sub">· 跑量必备要素清单，逐项 check，确保创作不踩坑</span></h3><ul class="runk-list"><li>①**痛点可视化冲击**：通过沾杯掉色vs持久不脱的强对比实验，用喷水、擦拭等测试画面制造视觉冲击力</li><li>②**场景百搭种草**：展示通勤、聚会、约会等多场景穿搭适配，让用户代入『我也需要』的购买心理</li><li>③**话题钩子开篇**：用『体制内流行色』『高级色』等社交话题制造好奇，3秒内锁定目标用户注意力</li></ul></section><section class="meth-block"><h3 class="mh"><span class="ic">📈</span>高光时序数据<span class="sub">· 近 7 天日均真实播放进度数据</span></h3><div class="highlight-method-summary">1/2 条素材有高光时序（覆盖率 50.0%）；关键转化点主要集中在 8-15s。点击/点赞/转发/流失关键点分别为 3/1/1/1 个。</div><div class="highlight-method-meta"><span class="highlight-method-chip">覆盖 1/2 条（50.0%）</span><span class="highlight-method-chip">关键转化点 6 个</span><span class="highlight-method-chip">0-3s · 1 个关键点</span><span class="highlight-method-chip">8-15s · 3 个关键点</span><span class="highlight-method-chip">15-30s · 2 个关键点</span></div><div class="highlight-content-title">内容策略与转化表现</div><div class="highlight-content-grid"><div class="highlight-content-card"><div class="name">实测演示</div><div class="stats">正向 5 · 流失 1 · 平均 13.7s<br>点击 3 / 点赞 1 / 转发 1 / 流失 1</div><div class="example">“博主：『非常适合秋天的口红』(涂抹口红特写)”</div></div><div class="highlight-content-card"><div class="name">人群场景</div><div class="stats">正向 1 · 流失 0 · 平均 1.0s<br>点击 0 / 点赞 1 / 转发 0 / 流失 0</div><div class="example">“博主：『非常适合秋天的口红』(涂抹口红特写)”</div></div><div class="highlight-content-card"><div class="name">信任背书</div><div class="stats">正向 1 · 流失 0 · 平均 10.0s<br>点击 0 / 点赞 0 / 转发 1 / 流失 0</div><div class="example">“旁白：『Baby果然没有骗我，终于体会到出门不用补涂的快乐了』(Angelababy涂口红画面，字幕：橘朵全球品牌代言人)”</div></div><div class="highlight-content-card"><div class="name">功效卖点</div><div class="stats">正向 0 · 流失 1 · 平均 26.0s<br>点击 0 / 点赞 0 / 转发 0 / 流失 1</div><div class="example">“博主：『稍微给它叠加一下，你看它又变成了AB早期的那种千禧复古裸感的灰粉色，就是这种非常高级有质感的水缎光的妆效，真的秒回Baby跑男时期的那种活人感』(展示厚涂效果)”</div></div></div><ul class="highlight-findings"><li>内容可解释率 100.0%：6/6 个关键点匹配到对应脚本或结构文案。</li><li>正向转化最强的是「实测演示」：出现 5 个点击/点赞/转发关键点，平均发生在 13.7s；典型内容“博主：『非常适合秋天的口红』(涂抹口红特写)”。</li><li>主要流失风险来自「实测演示」：对应 1 个流失关键点，平均发生在 26.0s；需优先压缩或改写“博主：『稍微给它叠加一下，你看它又变成了AB早期的那种千禧复古裸感的灰粉色，就是这种非常高级有质感的水缎光的妆效，真的秒回Baby跑男时期的那种活人感』(展示厚涂效果)”。</li></ul><div class="highlight-content-title">关键点内容证据</div><div class="highlight-method-samples"><div class="highlight-method-sample"><code>d93eb3d5</code> · 26.0s · <b>流失</b><br>最大流失点（129.1）用户在此大量划走</div><div class="highlight-method-sample"><code>d93eb3d5</code> · 12.0s · <b>点击</b><br>点击峰值（81.9）</div><div class="highlight-method-sample"><code>d93eb3d5</code> · 13.0s · <b>点击</b><br>点击骤降（-23.300000000000004）</div><div class="highlight-method-sample"><code>d93eb3d5</code> · 20.0s · <b>点击</b><br>点击骤升（+22.699999999999996）</div><div class="highlight-method-sample"><code>d93eb3d5</code> · 1.0s · <b>点赞</b><br>点赞峰值（8.0）</div><div class="highlight-method-sample"><code>d93eb3d5</code> · 10.0s · <b>转发</b><br>转发峰值（2.6）</div></div></section>
+  </section>
+
+  <!-- ③ 代表素材关键帧拆解（品牌 Top5 + 非品牌 Top5）-->
+  <section class="section">
+    <h2>🏆 代表素材关键帧拆解 <span class="count">· 品牌 / 非品牌各 Top5（按消耗降序）</span></h2>
+    <div class="top5-group-label" style="margin:6px 0 10px;font-weight:600;color:#9dbcff">🏪 品牌素材 Top1（按消耗降序）</div><div class="top-card" data-card-md5="d93eb3d5b8c1751dd430ea016fc60f67" data-card-search="d93eb3d5b8c1751dd430ea016fc60f67  唇部彩妆 头部类目 未填 品牌 达人开篇 开篇类型属于达人测评+明星背书+促销引导型。开篇博主展示涂抹某品牌秋季限定色S01无花果生巧，强调『体制内都在涂的白开水裸棕色』制造话题钩子。接着切入Angelababy代言人画面，用明星效应增加品牌信任度。中段多位博主轮流展示产品核心卖点" data-card-name="#1 唇部彩妆"><div class="cover"><img src="assets/428992bbb1c3b635.jpg" alt="cover"></div><div class="info"><div class="head"><span class="rank">#1</span><span class="meta-pill">🏪 品牌</span><span class="meta-pill">📦 头部类目</span><span class="meta-pill">🛒 唇部彩妆</span><span class="meta-pill">🧴 未填</span><span class="meta-pill" style="color:#94a3b8;border-color:#94a3b866">🏛 非白达</span><span class="meta-pill" style="color:#fbbf24;border-color:rgba(251,191,36,.4)">🎬 达人开篇</span></div><div class="metrics-row">消耗 <b>—</b> · 增长量 <b>—</b> · CTR <b>1.21%</b> · CVR <b>10.95%</b> · 3s完播 <b>17.2%</b> · 播放时长 <b>3.3s</b></div><details class="age-pie"><summary>🎂 转化人群年龄分布　<span class="age-sum-tag">主力 40-50</span></summary><div class="age-body"><svg class="age-svg" viewBox="0 0 108 108" width="108" height="108"><path d="M 54.0 54.0 L 54.00 8.00 A 46.0 46.0 0 0 1 54.69 8.01 Z" fill="#4f8cff" stroke-width="0.8"><title>19-24 岁 0.2%</title></path><path d="M 54.0 54.0 L 54.69 8.01 A 46.0 46.0 0 0 1 61.20 8.57 Z" fill="#22c55e" stroke-width="0.8"><title>25-29 岁 2.3%</title></path><path d="M 54.0 54.0 L 61.20 8.57 A 46.0 46.0 0 0 1 88.90 24.03 Z" fill="#f59e0b" stroke-width="0.8"><title>30-34 岁 11.2%</title></path><path d="M 54.0 54.0 L 88.90 24.03 A 46.0 46.0 0 0 1 72.65 96.05 Z" fill="#ef4444" stroke-width="0.8"><title>35-39 岁 29.6%</title></path><path d="M 54.0 54.0 L 72.65 96.05 A 46.0 46.0 0 0 1 8.00 53.56 Z" fill="#a855f7" stroke-width="0.8"><title>40-44 岁 31.8%</title></path><path d="M 54.0 54.0 L 8.00 53.56 A 46.0 46.0 0 0 1 34.94 12.13 Z" fill="#ec4899" stroke-width="0.8"><title>45-49 岁 18.0%</title></path><path d="M 54.0 54.0 L 34.94 12.13 A 46.0 46.0 0 0 1 49.67 8.20 Z" fill="#14b8a6" stroke-width="0.8"><title>50-54 岁 5.3%</title></path><path d="M 54.0 54.0 L 49.67 8.20 A 46.0 46.0 0 0 1 53.19 8.01 Z" fill="#eab308" stroke-width="0.8"><title>55-59 岁 1.2%</title></path><path d="M 54.0 54.0 L 53.19 8.01 A 46.0 46.0 0 0 1 54.00 8.00 Z" fill="#6366f1" stroke-width="0.8"><title>60-64 岁 0.3%</title></path></svg><div class="age-right"><div class="age-bks"><span class="age-bk">40- <b>43.4%</b></span><span class="age-bk on">40-50 <b>49.9%</b></span><span class="age-bk">50+ <b>6.8%</b></span></div><div class="age-legend"><span class="age-lg"><i style="background:#4f8cff"></i>19-24 <b>0.2%</b></span><span class="age-lg"><i style="background:#22c55e"></i>25-29 <b>2.3%</b></span><span class="age-lg"><i style="background:#f59e0b"></i>30-34 <b>11.2%</b></span><span class="age-lg"><i style="background:#ef4444"></i>35-39 <b>29.6%</b></span><span class="age-lg"><i style="background:#a855f7"></i>40-44 <b>31.8%</b></span><span class="age-lg"><i style="background:#ec4899"></i>45-49 <b>18.0%</b></span><span class="age-lg"><i style="background:#14b8a6"></i>50-54 <b>5.3%</b></span><span class="age-lg"><i style="background:#eab308"></i>55-59 <b>1.2%</b></span><span class="age-lg"><i style="background:#6366f1"></i>60-64 <b>0.3%</b></span></div></div></div></details><div class="md5-actions"><button class="md5-action" data-hook-copy="d93eb3d5b8c1751dd430ea016fc60f67" data-copy-toast="已复制 MD5">📋 MD5 · d93eb3d5b8c1751dd430ea016fc60f67</button></div><div class="desc">开篇类型属于达人测评+明星背书+促销引导型。开篇博主展示涂抹某品牌秋季限定色S01无花果生巧，强调『体制内都在涂的白开水裸棕色』制造话题钩子。接着切入Angelababy代言人画面，用明星效应增加品牌信任度。中段多位博主轮流展示产品核心卖点：30秒成膜、只掉油膜不掉底色、薄涂厚涂两种妆效、一笔遮盖唇纹、滋润不拔干等。通过喝水实测和纸巾擦拭验证持久不沾杯的效果。结尾切入直播间场景，主播展示大量产品并喊出『买的越多送的越多』促销机制，引导用户进入直播间下单。</div><div class="frames"><div class="frame"><img src="assets/e8847aaaa94c7f5c.jpg" alt="frame1"><div class="fcap"><div class="fname">达人种草开篇</div><div class="ftime">0-7s</div></div></div><div class="frame"><img src="assets/ed1f28004018bc97.jpg" alt="frame2"><div class="fcap"><div class="fname">明星背书</div><div class="ftime">7-11s</div></div></div><div class="frame"><img src="assets/2eef6178d663c2d1.jpg" alt="frame3"><div class="fcap"><div class="fname">卖点演示</div><div class="ftime">11-17s</div></div></div><div class="frame"><img src="assets/14051269f655ed1a.jpg" alt="frame4"><div class="fcap"><div class="fname">效果对比</div><div class="ftime">17-36s</div></div></div><div class="frame"><img src="assets/43b61012aa2a1557.jpg" alt="frame5"><div class="fcap"><div class="fname">功效展示</div><div class="ftime">36-53s</div></div></div></div><div data-muse-search="d93eb3d5b8c1751dd430ea016fc60f67"><button class="hp-btn" disabled title="等待对应 Skill 发布">复制技能标记并打开妙思</button></div></div></div><div class="top5-group-label" style="margin:18px 0 10px;font-weight:600;color:#86efac">🏬 非品牌素材 Top1（按消耗降序）</div><div class="top-card" data-card-md5="30668ea14379086a75272b2d0ddeb14e" data-card-search="30668ea14379086a75272b2d0ddeb14e  唇部彩妆 头部类目 未填 白牌 达人开篇 开篇类型属于达人唇妆教学口播型。开篇以唇部特写配合『口红颜色决定第一印象』的钩子文案快速抓住注意力。接着引出今年流行的『高级色』概念，强调气质奶咖色比鲜艳色更显高级。重点展示产品的雾面哑光质地和丝滑上嘴感，通过薄涂厚涂对比突出显色层次。穿插" data-card-name="#1 唇部彩妆"><div class="cover"><img src="assets/b67b9ce57b8bfccd.jpg" alt="cover"></div><div class="info"><div class="head"><span class="rank">#1</span><span class="meta-pill">🏪 白牌</span><span class="meta-pill">📦 头部类目</span><span class="meta-pill">🛒 唇部彩妆</span><span class="meta-pill">🧴 未填</span><span class="meta-pill" style="color:#94a3b8;border-color:#94a3b866">🏛 非白达</span><span class="meta-pill" style="color:#fbbf24;border-color:rgba(251,191,36,.4)">🎬 达人开篇</span></div><div class="metrics-row">消耗 <b>—</b> · 增长量 <b>—</b> · CTR <b>1.69%</b> · CVR <b>13.23%</b> · 3s完播 <b>87.8%</b> · 播放时长 <b>39.6s</b></div><details class="age-pie"><summary>🎂 转化人群年龄分布　<span class="age-sum-tag">主力 50+</span></summary><div class="age-body"><svg class="age-svg" viewBox="0 0 108 108" width="108" height="108"><path d="M 54.0 54.0 L 54.00 8.00 A 46.0 46.0 0 0 1 54.12 8.00 Z" fill="#4f8cff" stroke-width="0.8"><title>19-24 岁 0.0%</title></path><path d="M 54.0 54.0 L 54.12 8.00 A 46.0 46.0 0 0 1 55.33 8.02 Z" fill="#22c55e" stroke-width="0.8"><title>25-29 岁 0.4%</title></path><path d="M 54.0 54.0 L 55.33 8.02 A 46.0 46.0 0 0 1 61.08 8.55 Z" fill="#f59e0b" stroke-width="0.8"><title>30-34 岁 2.0%</title></path><path d="M 54.0 54.0 L 61.08 8.55 A 46.0 46.0 0 0 1 75.22 13.19 Z" fill="#ef4444" stroke-width="0.8"><title>35-39 岁 5.2%</title></path><path d="M 54.0 54.0 L 75.22 13.19 A 46.0 46.0 0 0 1 96.90 37.40 Z" fill="#a855f7" stroke-width="0.8"><title>40-44 岁 11.5%</title></path><path d="M 54.0 54.0 L 96.90 37.40 A 46.0 46.0 0 0 1 82.92 89.77 Z" fill="#ec4899" stroke-width="0.8"><title>45-49 岁 20.1%</title></path><path d="M 54.0 54.0 L 82.92 89.77 A 46.0 46.0 0 0 1 20.44 85.46 Z" fill="#14b8a6" stroke-width="0.8"><title>50-54 岁 23.8%</title></path><path d="M 54.0 54.0 L 20.44 85.46 A 46.0 46.0 0 0 1 14.82 29.90 Z" fill="#eab308" stroke-width="0.8"><title>55-59 岁 20.8%</title></path><path d="M 54.0 54.0 L 14.82 29.90 A 46.0 46.0 0 0 1 53.94 8.00 Z" fill="#6366f1" stroke-width="0.8"><title>60-64 岁 16.2%</title></path><path d="M 54.0 54.0 L 53.94 8.00 A 46.0 46.0 0 0 1 54.00 8.00 Z" fill="#f97316" stroke-width="0.8"><title>65+ 岁 0.0%</title></path></svg><div class="age-right"><div class="age-bks"><span class="age-bk">40- <b>7.6%</b></span><span class="age-bk">40-50 <b>31.5%</b></span><span class="age-bk on">50+ <b>60.8%</b></span></div><div class="age-legend"><span class="age-lg"><i style="background:#4f8cff"></i>19-24 <b>0.0%</b></span><span class="age-lg"><i style="background:#22c55e"></i>25-29 <b>0.4%</b></span><span class="age-lg"><i style="background:#f59e0b"></i>30-34 <b>2.0%</b></span><span class="age-lg"><i style="background:#ef4444"></i>35-39 <b>5.2%</b></span><span class="age-lg"><i style="background:#a855f7"></i>40-44 <b>11.5%</b></span><span class="age-lg"><i style="background:#ec4899"></i>45-49 <b>20.1%</b></span><span class="age-lg"><i style="background:#14b8a6"></i>50-54 <b>23.8%</b></span><span class="age-lg"><i style="background:#eab308"></i>55-59 <b>20.8%</b></span><span class="age-lg"><i style="background:#6366f1"></i>60-64 <b>16.2%</b></span><span class="age-lg"><i style="background:#f97316"></i>65+ <b>0.0%</b></span></div></div></div></details><div class="md5-actions"><button class="md5-action" data-hook-copy="30668ea14379086a75272b2d0ddeb14e" data-copy-toast="已复制 MD5">📋 MD5 · 30668ea14379086a75272b2d0ddeb14e</button></div><div class="desc">开篇类型属于达人唇妆教学口播型。开篇以唇部特写配合『口红颜色决定第一印象』的钩子文案快速抓住注意力。接着引出今年流行的『高级色』概念，强调气质奶咖色比鲜艳色更显高级。重点展示产品的雾面哑光质地和丝滑上嘴感，通过薄涂厚涂对比突出显色层次。穿插多次喷水测试和纸巾擦拭实验，用强视觉冲击证明持久不沾杯卖点。结尾强调百搭属性，休闲装、皮草、皮夹克都能驾驭，塑造『又高级又百搭』的产品心智。</div><div class="frames"><div class="frame"><img src="assets/0d9fec4f47670e42.jpg" alt="frame1"><div class="fcap"><div class="fname">痛点+悬念开场</div><div class="ftime">0-9s</div></div></div><div class="frame"><img src="assets/f8223e7d6de8bcad.jpg" alt="frame2"><div class="fcap"><div class="fname">产品亮相</div><div class="ftime">9-17s</div></div></div><div class="frame"><img src="assets/648cdb44d28b2b4f.jpg" alt="frame3"><div class="fcap"><div class="fname">卖点轰炸</div><div class="ftime">17-31s</div></div></div><div class="frame"><img src="assets/7a7a3b48251872ac.jpg" alt="frame4"><div class="fcap"><div class="fname">产品演示</div><div class="ftime">31-52s</div></div></div><div class="frame"><img src="assets/3de324aff8fd4308.jpg" alt="frame5"><div class="fcap"><div class="fname">效果验证</div><div class="ftime">52-64s</div></div></div></div><div data-muse-search="30668ea14379086a75272b2d0ddeb14e"><button class="hp-btn" disabled title="等待对应 Skill 发布">复制技能标记并打开妙思</button></div></div></div>
+  </section>
+</div>
+
+<div class="footer">素材解析台 · 唇部彩妆 · 20261019 · 对外版（脱敏）</div>
+<div id="_tip"></div>
+<script>
+// 复制按钮事件代理
+(function(){
+  var themeBtn=document.getElementById("themeToggle"),saved="";
+  try{saved=localStorage.getItem("stmc-report-theme")||"";}catch(_){}
+  if(saved==="light")document.documentElement.dataset.theme="light";
+  function syncTheme(){if(themeBtn)themeBtn.textContent=document.documentElement.dataset.theme==="light"?"☾ 整体深色":"☀ 整体亮色";}
+  if(themeBtn)themeBtn.onclick=function(){var light=document.documentElement.dataset.theme!=="light";document.documentElement.dataset.theme=light?"light":"dark";try{localStorage.setItem("stmc-report-theme",light?"light":"dark");}catch(_){}syncTheme();};
+  syncTheme();
+  var md5Form=document.getElementById("detailMd5Form"),md5Input=document.getElementById("detailMd5Input");
+  if(md5Form)md5Form.onsubmit=function(e){
+    e.preventDefault();
+    var q=(md5Input.value||"").trim().toLowerCase();
+    var cards=Array.prototype.slice.call(document.querySelectorAll(".top-card[data-card-md5]"));
+    cards.forEach(function(card){card.hidden=false;card.classList.remove("md5-hit");});
+    if(!q)return;
+    var hits=cards.filter(function(card){return (card.getAttribute("data-card-md5")||"").toLowerCase().indexOf(q)!==-1;});
+    if(!hits.length){
+      var tip=document.getElementById("_tip");tip.textContent="本类型 10 条代表素材中未找到该 MD5";
+      tip.className="ok";tip.style.display="block";clearTimeout(window._tipT);
+      window._tipT=setTimeout(function(){tip.style.display="none";},2200);return;
+    }
+    cards.forEach(function(card){card.hidden=hits.indexOf(card)===-1;});
+    hits[0].classList.add("md5-hit");hits[0].scrollIntoView({behavior:"smooth",block:"center"});
+  };
+  // 方法论区集中检索：md5 / 客户 / 品类 / 开篇类型 / 脚本关键词 → 同页直接跳到视频卡
+  var mForm=document.getElementById("methSearchForm"),mInput=document.getElementById("methSearchInput"),
+      mRes=document.getElementById("methSearchRes"),mReset=document.getElementById("methSearchReset");
+  function methClear(){
+    var cards=document.querySelectorAll(".top-card[data-card-md5]");
+    Array.prototype.forEach.call(cards,function(c){c.hidden=false;c.classList.remove("md5-hit");});
+    if(mRes)mRes.textContent="";
+  }
+  if(mForm)mForm.onsubmit=function(e){
+    e.preventDefault();
+    var q=(mInput.value||"").trim().toLowerCase();
+    var cards=Array.prototype.slice.call(document.querySelectorAll(".top-card[data-card-md5]"));
+    cards.forEach(function(c){c.hidden=false;c.classList.remove("md5-hit");});
+    if(!q){if(mRes)mRes.textContent="";return;}
+    var hits=cards.filter(function(c){
+      var blob=((c.getAttribute("data-card-search")||"")+" "+(c.getAttribute("data-card-md5")||"")).toLowerCase();
+      return blob.indexOf(q)!==-1;
+    });
+    if(!hits.length){
+      if(mRes)mRes.textContent="未找到匹配的代表素材（本页展示品牌/非品牌各 Top5）";
+      return;
+    }
+    cards.forEach(function(c){c.hidden=hits.indexOf(c)===-1;});
+    hits[0].classList.add("md5-hit");hits[0].scrollIntoView({behavior:"smooth",block:"center"});
+    if(mRes)mRes.textContent="命中 "+hits.length+" 条，已定位第 1 条："+(hits[0].getAttribute("data-card-name")||"");
+  };
+  if(mReset)mReset.onclick=function(){if(mInput)mInput.value="";methClear();};
+})();
+document.addEventListener("click", function(e){
+  var btn = e.target.closest("[data-hook-copy]");
+  if(!btn) return;
+  e.preventDefault();
+  var txt = btn.getAttribute("data-hook-copy") || "";
+  var ta = document.createElement("textarea");
+  ta.innerHTML = txt;
+  var decoded = ta.value;
+  function ok(){
+    var t = document.getElementById("_tip");
+    t.textContent = "✓ " + (btn.getAttribute("data-copy-toast") || "已复制黄金 3s prompt");
+    t.className = "ok"; t.style.display = "block";
+    clearTimeout(window._tipT);
+    window._tipT = setTimeout(function(){ t.style.display="none"; }, 1800);
+  }
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(decoded).then(ok);
+  } else {
+    var t2 = document.createElement("textarea");
+    t2.value = decoded; t2.style.position="fixed"; t2.style.opacity="0";
+    document.body.appendChild(t2); t2.select();
+    try { document.execCommand("copy"); ok(); } catch(_){}
+    document.body.removeChild(t2);
+  }
+});
+</script>
+<script src="muse/report.js" defer data-muse-widget></script>
+</body></html>
