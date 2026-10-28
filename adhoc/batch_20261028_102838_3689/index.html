@@ -424,15 +424,24 @@ function _cvRenderStatic(){
 function renderHighlightSection(items){
   const withHl = (items||[]).filter(it => (((it.highlight||{}).series)||[]).length >= 2);
   if(!withHl.length) return;
-  const byMd5 = {};
+  const byMd5 = {}, byIdx = {};
   withHl.forEach(it=>{ if(it.md5) byMd5[String(it.md5).toLowerCase()] = it; });
+  // 公网封面被内联成 base64 data URI，取不到 md5，用 #N 序号兜底映射
+  (items||[]).forEach((it,i)=>{ byIdx[String(it._ref_idx || (i+1))] = it; });
+  const hasSeries = it => (((it.highlight||{}).series)||[]).length >= 2;
   // 1) 悬停 #N chip（含封面）→ 弹高光浮层
   const content = document.getElementById("content");
   content.querySelectorAll("a.ref, span.ref").forEach(chip=>{
     let md5 = "";
     const img = chip.querySelector("img.ref-thumb");
     if(img){ const m = (img.getAttribute("src")||"").match(/([0-9a-f]{32})/i); if(m) md5 = m[1].toLowerCase(); }
-    const it = md5 ? byMd5[md5] : null;
+    let it = md5 ? byMd5[md5] : null;
+    if(!it){
+      const numEl = chip.querySelector(".ref-num");
+      const nm = numEl ? (numEl.textContent||"").trim().match(/^#(\d+)$/) : null;
+      const cand = nm ? byIdx[nm[1]] : null;
+      if(cand && hasSeries(cand)) it = cand;
+    }
     if(!it) return;
     chip.classList.add("hl-hoverable");
     chip.addEventListener("mouseenter", ()=>_hlQueuePopover(chip, it));
