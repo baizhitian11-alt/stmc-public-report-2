@@ -80,8 +80,11 @@
   }).then(data => {
     if (!Array.isArray(data.items)) return;
     globalThis.__musePeriod = data.period;
+    const picker = document.createElement('script'); picker.src = new URL('report-selection.js', base).href;
+    picker.onload = () => globalThis.MuseReportSelection?.mount(data.period, location.hostname.endsWith('github.io') ? data.workbench_url : '/dashboard/muse.html');
+    document.head.append(picker);
     const ecoButton = document.querySelector('#weeklyEcoSection a');
-    if (ecoButton) ecoButton.textContent = `本期高 eco 素材 · ${data.items.length} 条 · 查看 Demo 与 Skill`;
+    if (ecoButton) ecoButton.textContent = `本期妙思素材 · ${data.items.length} 条 · 查看 Demo 与 Skill`;
     const map = new Map(data.items.map(x => [x.md5, x]));
     if (gallery) {
       const count = document.querySelector('[data-muse-count]');
@@ -120,7 +123,6 @@
     function decorate() {
       document.querySelectorAll('[data-card-md5]').forEach(el => {
         const md5 = el.dataset.cardMd5;
-        el.querySelectorAll('[data-muse-attached]').forEach(node => node.remove());
         const prompts = el.querySelectorAll('.hook-prompt-block, .hp');
         if (prompts.length) {
           prompts.forEach(old => {
