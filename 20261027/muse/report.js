@@ -86,16 +86,18 @@
     if (gallery) {
       const count = document.querySelector('[data-muse-count]');
       const nodes = new Map();
+      const only = new Set((new URLSearchParams(location.search).get('md5s') || '').split(',').filter(s => /^[a-f0-9]{32}$/.test(s)));
       function update(next) {
-        if (count) count.textContent = `${next.period} · ${next.items.length} 条素材 · ${next.items.filter(x=>x.demo).length} 条 Demo 可播放 · ${next.items.filter(x=>x.stage==='live').length} 条 Skill 已发布`;
-        const retained = new Set(next.items.map(item => item.md5));
+        const items = only.size ? next.items.filter(x => only.has(x.md5)) : next.items;
+        if (count) count.textContent = `${next.period} · ${only.size ? `所选 ${items.length} 条（本期共 ${next.items.length} 条）` : `${items.length} 条素材`} · ${items.filter(x=>x.demo).length} 条 Demo 可播放 · ${items.filter(x=>x.stage==='live').length} 条 Skill 已发布`;
+        const retained = new Set(items.map(item => item.md5));
         for (const [md5, previous] of nodes) {
           if (retained.has(md5)) continue;
           previous.node.querySelector('video')?.pause();
           previous.node.remove();
           nodes.delete(md5);
         }
-        for (const item of next.items) {
+        for (const item of items) {
           const signature = JSON.stringify(item), previous = nodes.get(item.md5);
           if (previous?.signature === signature) continue;
           const node = card(item);
