@@ -23,9 +23,16 @@
     // Only queued (high-eco) materials get a placeholder; every other card stays as rendered.
     if(pending(item)){
       host.dataset.museSearchReady='1';host.replaceChildren();
-      const wait=doc.createElement('button');wait.type='button';wait.className='hp-btn';wait.disabled=true;wait.textContent='去妙思做同款 · 制作中';
+      const states={
+        prepared:['尚未开始','本条已选入同款队列，但未启动生成；周报解析已完成不代表同款 Skill 已生成。'],
+        draft:['待生成 Demo','本条 Skill 已保存为草稿，尚未生成 Demo 或发布，暂不可做同款。'],
+        demo_generating:['生成中','平台生成任务已提交，尚未完成；该状态不代表已经生成可用同款。'],
+        demo_ready:['待发布','Demo 已生成，Skill 尚未发布，暂不可做同款。'],
+      };
+      const [label,description]=states[item.stage];
+      const wait=doc.createElement('button');wait.type='button';wait.className='hp-btn';wait.disabled=true;wait.textContent='去妙思做同款 · '+label;
       const note=doc.createElement('small');note.style.cssText='display:block;margin-top:6px;line-height:1.7;';
-      note.textContent='本条的妙思同款 Skill 正在制作，上线后这里会变成可用按钮。';
+      note.textContent=description;
       host.append(wait,note);return;
     }
     if(!name){host.replaceChildren();host.dataset.museSearchReady='1';return;}
