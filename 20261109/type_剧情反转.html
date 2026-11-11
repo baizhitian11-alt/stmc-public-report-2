@@ -322,4 +322,148 @@ document.addEventListener("click", function(e){
 });
 </script>
 <script src="muse/report.js" defer data-muse-widget></script>
-</body></html>
+<!-- stmc-report-analytics:start --><script>
+(function () {
+  "use strict";
+  const measurementId = "G-7HT3YLFP02";
+  const host = location.hostname.toLowerCase();
+  if (!/^https?:$/.test(location.protocol) || host === "localhost" || !host.includes(".") ||
+      /^[\d.]+$/.test(host) || host.endsWith(".local") || host.endsWith(".woa.com") ||
+      navigator.globalPrivacyControl || navigator.doNotTrack === "1") return;
+  if (window.__stmcReportAnalytics) return;
+  window.__stmcReportAnalytics = true;
+  const storageKey = "stmc-report-analytics-consent-v1:" + measurementId;
+  const dateMatch = location.pathname.match(/\/(\d{8})(?:[^/]*)(?:\/|$)/);
+  const reportDate = dateMatch ? dateMatch[1] : "archive";
+  const file = location.pathname.split("/").pop() || "index.html";
+  const pageType = file.startsWith("cat_") ? "category" : file.startsWith("type_") ? "opening" :
+    file === "full.html" ? "full" : "index";
+  const safeLocation = location.origin + location.pathname;
+  let started = false;
+  let timer = null;
+  let pendingSeconds = 0;
+  let checkpoint = 0;
+  let lastActivity = 0;
+  let panel;
+
+  function remember(value) {
+    try { localStorage.setItem(storageKey, value); } catch (_) {}
+  }
+  function send(name, params) {
+    if (!started) return;
+    window.gtag("event", name, Object.assign({send_to: measurementId, report_date: reportDate,
+      page_type: pageType, page_location: safeLocation, page_referrer: "",
+      page_title: "素材周报 · " + reportDate + " · " + pageType}, params));
+  }
+  function tick(flush) {
+    const now = performance.now();
+    if (started && !document.hidden && document.hasFocus()) {
+      pendingSeconds += Math.max(0, Math.min(now, lastActivity + 60000) - checkpoint) / 1000;
+    }
+    checkpoint = now;
+    if (started && pendingSeconds >= 1 && (flush || pendingSeconds >= 15)) {
+      const seconds = Math.floor(pendingSeconds);
+      pendingSeconds -= seconds;
+      send("report_engagement", {active_seconds: seconds});
+    }
+  }
+  function activity() {
+    tick(false);
+    lastActivity = performance.now();
+  }
+  function start() {
+    if (started) return;
+    started = true;
+    checkpoint = lastActivity = performance.now();
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
+    window.gtag("consent", "default", {analytics_storage: "granted", ad_storage: "denied",
+      ad_user_data: "denied", ad_personalization: "denied"});
+    window.gtag("js", new Date());
+    window.gtag("config", measurementId, {send_page_view: false,
+      allow_google_signals: false, allow_ad_personalization_signals: false,
+      page_location: safeLocation, page_referrer: "", page_title: "素材周报 · " + reportDate + " · " + pageType});
+    const script = document.createElement("script");
+    script.async = true;
+    script.src = "https://www.googletagmanager.com/gtag/js?id=" + measurementId;
+    script.referrerPolicy = "no-referrer";
+    document.head.appendChild(script);
+    send("page_view", {});
+    timer = setInterval(function () { tick(false); }, 5000);
+  }
+  function stop() {
+    if (started) {
+      window.gtag("consent", "update", {analytics_storage: "denied", ad_storage: "denied",
+        ad_user_data: "denied", ad_personalization: "denied"});
+      window["ga-disable-" + measurementId] = true;
+    }
+    started = false;
+    pendingSeconds = 0;
+    clearInterval(timer);
+  }
+  const control = document.createElement("button");
+  control.type = "button";
+  control.textContent = "阅读统计设置";
+  control.style.cssText = "position:fixed;bottom:8px;right:12px;z-index:9998;font:11px/1.5 sans-serif;background:#fff;color:#59554d;border:1px solid #d6d0c4;border-radius:6px;padding:4px 8px;cursor:pointer";
+  control.addEventListener("click", function () { panel.hidden = false; });
+  panel = document.createElement("section");
+  panel.setAttribute("aria-label", "阅读统计选择");
+  panel.style.cssText = "position:fixed;bottom:40px;right:12px;left:auto;z-index:9999;width:min(360px,calc(100vw - 24px));box-sizing:border-box;padding:16px;border:1px solid #d6d0c4;border-radius:12px;background:#fffdf8;color:#3e3b34;font:13px/1.6 sans-serif;box-shadow:0 6px 24px #0002";
+  const text = document.createElement("p");
+  text.style.margin = "0 0 12px";
+  text.textContent = "是否允许使用 Google Analytics 统计本周报的阅读、点击及有效停留时长？会使用统计 Cookie 并向 Google 发送访问事件；不发送素材内容、金额或搜索词。拒绝不影响阅读，可随时在此关闭。";
+  panel.appendChild(text);
+  [["允许统计", "granted"], ["不统计 / 关闭", "denied"]].forEach(function (option) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = option[0];
+    button.style.cssText = "font:inherit;padding:6px 10px;margin-right:8px;background:#f3eee5;color:#3e3b34;border:1px solid #d6d0c4;border-radius:6px;cursor:pointer";
+    button.addEventListener("click", function () {
+      remember(option[1]);
+      if (option[1] === "granted") {
+        window["ga-disable-" + measurementId] = false;
+        if (window.gtag) window.gtag("consent", "update", {analytics_storage: "granted",
+          ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
+        start();
+      } else stop();
+      panel.hidden = true;
+    });
+    panel.appendChild(button);
+  });
+  document.body.appendChild(panel);
+  document.body.appendChild(control);
+  let consent = "";
+  try { consent = localStorage.getItem(storageKey) || ""; } catch (_) {}
+  panel.hidden = consent === "granted" || consent === "denied";
+  if (consent === "granted") start();
+
+  ["pointerdown", "keydown", "scroll", "touchstart"].forEach(function (event) {
+    document.addEventListener(event, activity, {passive: true});
+  });
+  window.addEventListener("blur", function () { tick(true); });
+  window.addEventListener("focus", function () { checkpoint = lastActivity = performance.now(); });
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) {
+      checkpoint = performance.now();
+      tick(true);
+    } else checkpoint = lastActivity = performance.now();
+  });
+  window.addEventListener("pagehide", function () { tick(true); });
+  document.addEventListener("click", function (event) {
+    const target = event.target;
+    if (!target || !target.closest || panel.contains(target) || target === control) return;
+    const link = target.closest("a[href]");
+    const button = target.closest("button,[role=button]");
+    if (link) {
+      let kind = "navigation";
+      if (link.hasAttribute("download")) kind = "download";
+      else if (/\.(mp4|webm|mov)(?:[?#]|$)/i.test(link.getAttribute("href") || "")) kind = "video";
+      send("report_click", {click_type: kind});
+    } else if (button) send("report_click", {click_type: "button"});
+  });
+  document.addEventListener("play", function (event) {
+    if (event.target && event.target.tagName === "VIDEO") send("report_video_play", {});
+  }, true);
+})();
+
+</script><!-- stmc-report-analytics:end --></body></html>
