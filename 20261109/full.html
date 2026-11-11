@@ -615,7 +615,13 @@
         });
       }
     }
-    return {render, matches:it => matches(it,selected), clear(){selected.production.clear();selected.drama.clear();if(host)render();}};
+    return {render, matches:it => matches(it,selected),
+      select(key,value){
+        const allowed = key === 'production' ? labels : key === 'drama' ? dramaLabels : null;
+        if(!allowed || !Object.hasOwn(allowed,value)) return;
+        selected[key].add(value);render();
+      },
+      clear(){selected.production.clear();selected.drama.clear();if(host)render();}};
   }
   const api={production,drama,matches,tagsHTML,create};
   root.AiOpening=api;
@@ -2119,6 +2125,17 @@ document.addEventListener("click", (e) => {
 
 // 初始化
 buildFilters();
+const initialAI = new URLSearchParams(location.search);
+if(_aiOpeningUI && initialAI.get("ai_drama") === "1"){
+  _aiOpeningUI.select("drama", "yes");
+  state.topN = 0;
+  const top = document.getElementById("topN"); if(top) top.value = "0";
+}
+if(_aiOpeningUI && initialAI.get("ai_production") === "suspected_ai"){
+  _aiOpeningUI.select("production", "suspected_ai");
+  state.topN = 0;
+  const top = document.getElementById("topN"); if(top) top.value = "0";
+}
 // 支持从周报首页或外部链接以 full.html?md5=<完整/部分ID> 直达单条视频。
 const initialMd5=(new URLSearchParams(location.search).get("md5")||"").trim().toLowerCase();
 if(initialMd5){
